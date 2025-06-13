@@ -244,30 +244,31 @@ export default function StartupShowcase() {
         </div>
       </section>
 
-      {/* Testimonial - Responsive */}
-      <section className="py-16 sm:py-24 bg-gradient-to-br from-amber-50 to-stone-100">
-        <div className="max-w-4xl mx-auto px-6 sm:px-8">
-          <div className="bg-cream p-6 sm:p-8 lg:p-12 rounded-lg shadow-xl border border-stone-200">
-            <div className="flex justify-center space-x-1 mb-6">
-              {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-amber-500 text-xl sm:text-2xl">★</span>
-              ))}
-            </div>
-            <p className="text-lg sm:text-xl lg:text-2xl text-stone-700 italic leading-relaxed mb-8 text-center">
-              "Nexora's platform helped me identify and invest in three startups that have already returned 3x my initial investment. Exceptional curation and support."
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-amber-200 rounded-full flex items-center justify-center text-amber-800 font-bold text-lg sm:text-xl">
-                SL
-              </div>
-              <div className="text-center sm:text-left">
-                <p className="font-bold text-stone-800">Sarah Lopez</p>
-                <p className="text-stone-600 text-sm sm:text-base">Angel Investor & Venture Partner</p>
-              </div>
-            </div>
-          </div>
+  {/* Testimonial - Responsive */}
+<section className="py-16 sm:py-24 bg-gradient-to-br from-amber-50 to-stone-100">
+  <div className="max-w-4xl mx-auto px-6 sm:px-8">
+    <div className="bg-cream p-6 sm:p-8 lg:p-12 rounded-lg shadow-xl border border-stone-200">
+      <div className="flex justify-center space-x-1 mb-6">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className="text-amber-500 text-xl sm:text-2xl">★</span>
+        ))}
+      </div>
+      <p className="text-lg sm:text-xl lg:text-2xl text-stone-700 italic leading-relaxed mb-8 text-center">
+        &quot;Nexora&apos;s platform helped me identify and invest in three startups that have already returned 3x my initial investment. Exceptional curation and support.&quot;
+      </p>
+      <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-amber-200 rounded-full flex items-center justify-center text-amber-800 font-bold text-lg sm:text-xl">
+          SL
         </div>
-      </section>
+        <div className="text-center sm:text-left">
+          <p className="font-bold text-stone-800">Sarah Lopez</p>
+          <p className="text-stone-600 text-sm sm:text-base">Angel Investor & Venture Partner</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Contact Section - Responsive */}
       <section className="py-16 sm:py-24 bg-gradient-to-r from-stone-700 to-stone-800 relative overflow-hidden">
