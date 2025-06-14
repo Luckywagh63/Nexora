@@ -31,12 +31,16 @@ export default function StartupShowcase() {
             </p>
             
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <Link href="/form">
               <button className="bg-amber-600 text-cream px-6 sm:px-8 py-3 sm:py-4 rounded-none font-bold hover:bg-amber-700 transition-colors cursor-pointer shadow-lg">
                 START INVESTING
               </button>
+            </Link>
+            <Link href="/business">
               <button className="border-2 border-stone-600 text-stone-600 px-6 sm:px-8 py-3 sm:py-4 font-bold hover:bg-stone-600 hover:text-white cursor-pointer transition-all">
                 VIEW STARTUPS
               </button>
+            </Link>
             </div>
           </div>
         </div>
