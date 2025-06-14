@@ -34,8 +34,8 @@ export default function NexoraNavbar() {
   }, [lastScrollY]);
 
   const navLinks = [
-    { href: "/business", label: "Home", icon: Home },
-    { href: "/explore", label: "Explore", icon: Compass },
+    { href: "/", label: "Home", icon: Home },
+    { href: "/business", label: "Explore", icon: Compass },
     { href: "/about", label: "About", icon: Info },
     { href: "/contact", label: "Contact", icon: Mail },
   ];
