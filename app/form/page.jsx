@@ -423,17 +423,51 @@ export default function FormPage() {
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
                     Project Proposal
                   </label>
-                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center hover:border-orange-500 transition-colors cursor-pointer">
+                  <div
+                    className="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center hover:border-orange-500 transition-colors cursor-pointer"
+                    onClick={() => document.getElementById('fileInput').click()}
+                  >
                     <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                    <p className="text-slate-600 mb-2">Upload your project proposal or pitch deck</p>
+                    <p className="text-slate-600 mb-2">
+                      {formData.pitchDeck ? formData.pitchDeck.name : 'Upload your project proposal or pitch deck'}
+                    </p>
                     <p className="text-sm text-slate-500">PDF, PPT, or DOC files up to 10MB</p>
                     <input
+                      id="fileInput"
                       type="file"
                       className="hidden"
                       accept=".pdf,.ppt,.pptx,.doc,.docx"
-                      onChange={(e) => handleInputChange('pitchDeck', e.target.files[0])}
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          // Check file size (10MB limit)
+                          if (file.size > 10 * 1024 * 1024) {
+                            alert('File size must be less than 10MB');
+                            return;
+                          }
+                          handleInputChange('pitchDeck', file);
+                        }
+                      }}
                     />
                   </div>
+                  {formData.pitchDeck && (
+                    <div className="mt-3 flex items-center justify-between bg-slate-50 p-3 rounded-lg">
+                      <div className="flex items-center space-x-2">
+                        <FileText className="h-4 w-4 text-slate-500" />
+                        <span className="text-sm text-slate-700">{formData.pitchDeck.name}</span>
+                        <span className="text-xs text-slate-500">
+                          ({(formData.pitchDeck.size / 1024 / 1024).toFixed(2)} MB)
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleInputChange('pitchDeck', null)}
+                        className="text-red-500 hover:text-red-700 text-sm"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
