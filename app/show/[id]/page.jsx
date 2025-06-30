@@ -2,20 +2,22 @@
 import dbConnect from '@/lib/dbConnect';
 import Startup from '@/models/Startup';
 import Link from 'next/link';
-import { 
-  Building2, 
-  DollarSign, 
-  MapPin, 
-  Users, 
-  Calendar, 
-  ArrowLeft, 
-  CheckCircle, 
+import {
+  Building2,
+  DollarSign,
+  MapPin,
+  Users,
+  Calendar,
+  ArrowLeft,
+  CheckCircle,
   XCircle,
   Mail,
   FileText,
   Building,
   TrendingUp,
-  Award
+  Award,
+  Download,
+  ExternalLink
 } from 'lucide-react';
 
 export default async function ShowPage({ params: rawParams }) {
@@ -53,7 +55,7 @@ export default async function ShowPage({ params: rawParams }) {
     const cleanAmount = amount.replace(/,/g, '');
     const num = parseInt(cleanAmount);
     if (isNaN(num)) return amount;
-    
+
     if (num >= 1000000) {
       return `$${(num / 1000000).toFixed(1)}M`;
     } else if (num >= 1000) {
@@ -94,7 +96,7 @@ export default async function ShowPage({ params: rawParams }) {
               <span>Back to All Startups</span>
             </Link>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-8 items-center">
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
@@ -108,7 +110,7 @@ export default async function ShowPage({ params: rawParams }) {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-center space-x-4 text-white">
                 <span className="bg-orange-500 px-4 py-2 rounded-full text-sm font-medium">
                   {startup.industry}
@@ -121,7 +123,7 @@ export default async function ShowPage({ params: rawParams }) {
                 </div>
               </div>
             </div>
-            
+
             {/* Status Card */}
             <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 text-black">
               <h3 className="text-lg font-semibold mb-4">Company Status</h3>
@@ -178,7 +180,7 @@ export default async function ShowPage({ params: rawParams }) {
                 <Building className="h-6 w-6 text-orange-500" />
                 <h2 className="text-2xl font-bold text-slate-800">Company Details</h2>
               </div>
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
@@ -187,7 +189,7 @@ export default async function ShowPage({ params: rawParams }) {
                     </h3>
                     <p className="text-slate-800 font-medium">{startup.industry}</p>
                   </div>
-                  
+
                   <div>
                     <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">
                       Incorporation Status
@@ -200,7 +202,7 @@ export default async function ShowPage({ params: rawParams }) {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div>
                     <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">
@@ -220,7 +222,7 @@ export default async function ShowPage({ params: rawParams }) {
                       )}
                     </div>
                   </div>
-                  
+
                   <div>
                     <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">
                       Revenue Status
@@ -249,7 +251,7 @@ export default async function ShowPage({ params: rawParams }) {
                 <DollarSign className="h-6 w-6 text-orange-500" />
                 <h2 className="text-2xl font-bold text-slate-800">Funding Information</h2>
               </div>
-              
+
               <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg p-6">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-orange-600 mb-2">
@@ -257,8 +259,8 @@ export default async function ShowPage({ params: rawParams }) {
                   </div>
                   <p className="text-orange-700 font-medium">Total Funding Raised</p>
                   <p className="text-sm text-orange-600 mt-2">
-                    {startup.fundingAmount ? 
-                      'Includes angel, venture capital, loans, grants, and token sales' : 
+                    {startup.fundingAmount ?
+                      'Includes angel, venture capital, loans, grants, and token sales' :
                       'Funding details not disclosed'
                     }
                   </p>
@@ -275,7 +277,7 @@ export default async function ShowPage({ params: rawParams }) {
                 <Users className="h-5 w-5 text-orange-500" />
                 <h3 className="text-lg font-semibold text-slate-800">Contact Information</h3>
               </div>
-              
+
               <div className="space-y-3">
                 <div>
                   <p className="text-sm text-slate-500">Founder</p>
@@ -283,7 +285,7 @@ export default async function ShowPage({ params: rawParams }) {
                     {startup.firstName} {startup.lastName}
                   </p>
                 </div>
-                
+
                 <div>
                   <p className="text-sm text-slate-500">Email</p>
                   <div className="flex items-center space-x-2">
@@ -302,7 +304,7 @@ export default async function ShowPage({ params: rawParams }) {
                 <Calendar className="h-5 w-5 text-orange-500" />
                 <h3 className="text-lg font-semibold text-slate-800">Timeline</h3>
               </div>
-              
+
               <div className="space-y-3">
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
@@ -311,7 +313,7 @@ export default async function ShowPage({ params: rawParams }) {
                     <p className="font-medium text-slate-800">{formatDate(startup.createdAt)}</p>
                   </div>
                 </div>
-                
+
                 {startup.updatedAt !== startup.createdAt && (
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-slate-300 rounded-full mt-2"></div>
@@ -324,20 +326,61 @@ export default async function ShowPage({ params: rawParams }) {
               </div>
             </div>
 
-            {/* Additional Resources */}
+            {/* Pitch Deck Resources */}
             {startup.pitchDeck && (
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <FileText className="h-5 w-5 text-orange-500" />
-                  <h3 className="text-lg font-semibold text-slate-800">Resources</h3>
+                  <h3 className="text-lg font-semibold text-slate-800">Pitch Deck</h3>
                 </div>
-                
-                <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-lg">
-                  <Award className="h-4 w-4 text-orange-500" />
-                  <span className="text-sm font-medium text-slate-700">Pitch Deck Available</span>
+
+                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <Award className="h-5 w-5 text-orange-500" />
+                    <div>
+                      <p className="text-sm font-medium text-slate-800 truncate max-w-[160px]">
+                        {startup.pitchDeck.split('/').pop().split('?')[0] || 'Pitch Deck'}
+                      </p>
+                      <p className="text-xs text-slate-500">Company presentation</p>
+                    </div>
+                  </div>
+
+                  <div className="flex space-x-2">
+                    {/* VIEW LINK USING IFRAME OPENING */}
+                    <a
+                      href={
+                        (() => {
+                          const url = startup.pitchDeck;
+                          const ext = url?.split('.').pop()?.toLowerCase();
+                          const useViewer = ['pdf', 'doc', 'docx', 'ppt', 'pptx'].includes(ext);
+                          return useViewer
+                            ? `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`
+                            : url;
+                        })()
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
+                    >
+                      <ExternalLink className="h-3 w-3" />
+                      <span>View</span>
+                    </a>
+
+
+                    {/* DOWNLOAD LINK */}
+                    <a
+                      href={startup.pitchDeck}
+                      download
+                      className="flex items-center space-x-1 text-orange-600 hover:text-orange-700 text-sm font-medium transition-colors"
+                    >
+                      <Download className="h-3 w-3" />
+                      <span>Download</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             )}
+
 
             {/* Call to Action */}
             <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-6 text-white text-center">
@@ -345,7 +388,7 @@ export default async function ShowPage({ params: rawParams }) {
               <p className="text-orange-100 text-sm mb-4">
                 Connect with the founder to learn more about investment opportunities
               </p>
-              <a 
+              <a
                 href={`mailto:${startup.email}?subject=Interest in ${startup.name}`}
                 className="bg-white text-orange-500 px-4 py-2 rounded-lg font-medium hover:bg-orange-50 transition-colors inline-flex items-center space-x-2"
               >
