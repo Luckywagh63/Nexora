@@ -5,7 +5,7 @@ import { ChevronDown, Building2, DollarSign, MapPin, Users, FileText } from 'luc
 
 export default function FormPage() {
   const router = useRouter();
-  
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -60,28 +60,55 @@ export default function FormPage() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    
-    try {
-      const res = await fetch('/api/startup', {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log('Form submitted:', formData);
+
+  try {
+    // ✅ 1. Upload to Cloudinary if pitchDeck is a File object
+    let updatedFormData = { ...formData };
+
+    if (formData.pitchDeck && typeof formData.pitchDeck !== 'string') {
+      const uploadForm = new FormData();
+      uploadForm.append('file', formData.pitchDeck);
+
+      const uploadRes = await fetch('/api/upload', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: uploadForm,
       });
-      
-      if (res.ok) {
-        router.push('/business');
+
+      const uploadData = await uploadRes.json();
+
+      // 🔥 Fix here: use uploadData.url not fileUrl
+      if (uploadRes.ok && uploadData.url) {
+        updatedFormData.pitchDeck = uploadData.url; // Replace File with Cloudinary URL
       } else {
-        console.error('Form submission failed');
+        console.error('Cloudinary upload failed:', uploadData);
+        alert('File upload failed. Please try again.');
+        return;
       }
-    } catch (error) {
-      console.error('Error submitting form:', error);
     }
-  };
+
+    // ✅ 2. Submit to your API with pitchDeck URL
+    const res = await fetch('/api/startup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedFormData),
+    });
+
+    if (res.ok) {
+      router.push('/business');
+    } else {
+      console.error('Form submission failed');
+    }
+  } catch (error) {
+    console.error('Error submitting form:', error);
+  }
+};
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -126,25 +153,22 @@ export default function FormPage() {
         <div className="flex items-center justify-between mb-8">
           {[1, 2, 3, 4].map((step) => (
             <div key={step} className="flex items-center">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= step 
-                  ? 'bg-orange-500 text-white' 
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold ${currentStep >= step
+                  ? 'bg-orange-500 text-white'
                   : 'bg-slate-200 text-slate-600'
-              }`}>
+                }`}>
                 {step}
               </div>
-              <span className={`ml-3 text-sm font-medium ${
-                currentStep >= step ? 'text-orange-500' : 'text-slate-500'
-              }`}>
+              <span className={`ml-3 text-sm font-medium ${currentStep >= step ? 'text-orange-500' : 'text-slate-500'
+                }`}>
                 {step === 1 && 'Basic Information'}
                 {step === 2 && 'Startup Details'}
                 {step === 3 && 'Company Details'}
                 {step === 4 && 'Project Information'}
               </span>
               {step < 4 && (
-                <div className={`w-12 h-1 mx-2 ${
-                  currentStep > step ? 'bg-orange-500' : 'bg-slate-200'
-                }`}></div>
+                <div className={`w-12 h-1 mx-2 ${currentStep > step ? 'bg-orange-500' : 'bg-slate-200'
+                  }`}></div>
               )}
             </div>
           ))}
@@ -160,7 +184,7 @@ export default function FormPage() {
                   <Users className="h-6 w-6 text-orange-500" />
                   <h2 className="text-2xl font-bold text-slate-800">Personal Information</h2>
                 </div>
-                
+
                 <p className="text-slate-600 mb-8">
                   Let's start with some basic information about you.
                 </p>
@@ -180,7 +204,7 @@ export default function FormPage() {
                       required
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">
                       Last Name *
@@ -317,28 +341,26 @@ export default function FormPage() {
                     <button
                       type="button"
                       onClick={() => handleInputChange('isUSIncorporated', 'yes')}
-                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${
-                        formData.isUSIncorporated === 'yes'
+                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${formData.isUSIncorporated === 'yes'
                           ? 'bg-orange-500 text-white border-orange-500'
                           : 'bg-white text-slate-700 border-slate-300 hover:border-orange-500'
-                      }`}
+                        }`}
                     >
                       Yes
                     </button>
                     <button
                       type="button"
                       onClick={() => handleInputChange('isUSIncorporated', 'no')}
-                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${
-                        formData.isUSIncorporated === 'no'
+                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${formData.isUSIncorporated === 'no'
                           ? 'bg-orange-500 text-white border-orange-500'
                           : 'bg-white text-slate-700 border-slate-300 hover:border-orange-500'
-                      }`}
+                        }`}
                     >
                       No
                     </button>
                   </div>
                   <p className="text-sm text-slate-500 mt-2">
-                    Only companies that are incorporated or formed in the US are eligible to raise via Reg CF. 
+                    Only companies that are incorporated or formed in the US are eligible to raise via Reg CF.
                     If your company is incorporated outside the US, we still encourage you to apply.
                   </p>
                 </div>
@@ -361,22 +383,20 @@ export default function FormPage() {
                     <button
                       type="button"
                       onClick={() => handleInputChange('productAvailable', 'yes')}
-                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${
-                        formData.productAvailable === 'yes'
+                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${formData.productAvailable === 'yes'
                           ? 'bg-orange-500 text-white border-orange-500'
                           : 'bg-white text-slate-700 border-slate-300 hover:border-orange-500'
-                      }`}
+                        }`}
                     >
                       Yes
                     </button>
                     <button
                       type="button"
                       onClick={() => handleInputChange('productAvailable', 'no')}
-                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${
-                        formData.productAvailable === 'no'
+                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${formData.productAvailable === 'no'
                           ? 'bg-orange-500 text-white border-orange-500'
                           : 'bg-white text-slate-700 border-slate-300 hover:border-orange-500'
-                      }`}
+                        }`}
                     >
                       No
                     </button>
@@ -394,22 +414,20 @@ export default function FormPage() {
                     <button
                       type="button"
                       onClick={() => handleInputChange('generatingRevenue', 'yes')}
-                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${
-                        formData.generatingRevenue === 'yes'
+                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${formData.generatingRevenue === 'yes'
                           ? 'bg-orange-500 text-white border-orange-500'
                           : 'bg-white text-slate-700 border-slate-300 hover:border-orange-500'
-                      }`}
+                        }`}
                     >
                       Yes
                     </button>
                     <button
                       type="button"
                       onClick={() => handleInputChange('generatingRevenue', 'no')}
-                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${
-                        formData.generatingRevenue === 'no'
+                      className={`px-6 py-3 rounded-lg border font-medium transition-colors ${formData.generatingRevenue === 'no'
                           ? 'bg-orange-500 text-white border-orange-500'
                           : 'bg-white text-slate-700 border-slate-300 hover:border-orange-500'
-                      }`}
+                        }`}
                     >
                       No
                     </button>
@@ -477,16 +495,15 @@ export default function FormPage() {
               <button
                 type="button"
                 onClick={handleBack}
-                className={`px-6 py-3 rounded-lg font-medium transition-colors ${
-                  currentStep === 1
+                className={`px-6 py-3 rounded-lg font-medium transition-colors ${currentStep === 1
                     ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
                     : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
-                }`}
+                  }`}
                 disabled={currentStep === 1}
               >
                 Back
               </button>
-              
+
               {currentStep < 4 ? (
                 <button
                   type="button"
