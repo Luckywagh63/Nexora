@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { auth, db } from "@/lib/firebase";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { Mail, Lock, User, ArrowRight } from "lucide-react";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -22,7 +13,6 @@ export default function AuthPage() {
     acceptTerms: false,
   });
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -35,23 +25,8 @@ export default function AuthPage() {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (!userDoc.exists()) {
-        await setDoc(doc(db, "users", user.uid), {
-          uid: user.uid,
-          firstName: user.displayName?.split(" ")[0] || "",
-          lastName: user.displayName?.split(" ")[1] || "",
-          email: user.email,
-          createdAt: new Date().toISOString(),
-          emailVerified: user.emailVerified,
-        });
-      }
-
-      router.push("/");
+      // Add your Google sign-in logic here
+      console.log("Google sign-in");
     } catch (error) {
       alert("Google sign-in failed: " + error.message);
     } finally {
@@ -65,42 +40,15 @@ export default function AuthPage() {
 
     try {
       if (isLogin) {
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          formData.email,
-          formData.password
-        );
-
-        if (!userCredential.user.emailVerified) {
-          alert("Please verify your email before logging in.");
-          return;
-        }
-
-        router.push("/");
+        // Add your login logic here
+        console.log("Login", formData);
       } else {
         if (!formData.acceptTerms) {
           alert("You must accept the terms to sign up.");
           return;
         }
-
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          formData.email,
-          formData.password
-        );
-
-        await sendEmailVerification(userCredential.user);
-        await setDoc(doc(db, "users", userCredential.user.uid), {
-          uid: userCredential.user.uid,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          createdAt: new Date().toISOString(),
-          emailVerified: false,
-        });
-
-        alert("Verification email sent. Please verify your email before logging in.");
-        setIsLogin(true);
+        // Add your signup logic here
+        console.log("Signup", formData);
       }
     } catch (error) {
       alert((isLogin ? "Login" : "Signup") + " failed: " + error.message);
@@ -110,17 +58,20 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
-      <div className="w-full max-w-md">
-        <div className="bg-gradient-to-b from-amber-25 to-orange-25 backdrop-blur-sm border border-amber-200/30 rounded-3xl shadow-2xl p-8">
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <span className="text-white font-bold text-2xl">N</span>
+    <div className="min-h-screen flex items-center justify-center p-6 bg-black relative">
+      {/* Subtle texture */}
+      <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
+
+      <div className="w-full max-w-md relative z-10">
+        <div className="border border-gray-900 p-12">
+          <div className="text-center mb-12">
+            <div className="mb-8">
+              <span className="text-3xl font-light text-white tracking-tight">NEXORA</span>
             </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent mb-2">
+            <h1 className="text-4xl font-light text-white mb-3 tracking-tight">
               {isLogin ? "Welcome Back" : "Join Nexora"}
             </h1>
-            <p className="text-amber-700/70">
+            <p className="text-gray-600 font-light text-sm tracking-wide">
               {isLogin ? "Sign in to continue" : "Create your account"}
             </p>
           </div>
@@ -128,7 +79,7 @@ export default function AuthPage() {
           <button
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full mb-6 bg-white border-2 border-amber-200 text-amber-800 py-3 px-4 rounded-xl font-medium hover:bg-amber-50 hover:border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400 transition-all flex items-center justify-center gap-3 shadow-sm disabled:opacity-50"
+            className="w-full mb-8 border border-gray-800 text-white py-3 px-4 font-light text-sm tracking-wide hover:border-gray-700 focus:outline-none focus:border-amber-500/50 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -139,58 +90,70 @@ export default function AuthPage() {
             Continue with Google
           </button>
 
-          <div className="relative mb-6">
+          <div className="relative mb-8">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-amber-200"></div>
+              <div className="w-full border-t border-gray-900"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-gradient-to-b from-amber-25 to-orange-25 text-amber-600">or</span>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-4 bg-black text-gray-600 font-light tracking-wider uppercase">or</span>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <div onSubmit={handleSubmit} className="space-y-6">
             {!isLogin && (
-              <div className="grid grid-cols-2 gap-3">
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder="First Name"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  className="px-4 py-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/60 placeholder-amber-600/50"
-                  required
-                />
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Last Name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  className="px-4 py-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/60 placeholder-amber-600/50"
-                  required
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs text-gray-700 mb-2 font-light tracking-wider uppercase">First Name</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="John"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-800 bg-gray-900/50 text-white placeholder-gray-700 focus:outline-none focus:border-amber-500/50 font-light text-sm transition-all"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-700 mb-2 font-light tracking-wider uppercase">Last Name</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Doe"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-800 bg-gray-900/50 text-white placeholder-gray-700 focus:outline-none focus:border-amber-500/50 font-light text-sm transition-all"
+                    required
+                  />
+                </div>
               </div>
             )}
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/60 placeholder-amber-600/50"
-              required
-            />
+            <div>
+              <label className="block text-xs text-gray-700 mb-2 font-light tracking-wider uppercase">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@company.com"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-800 bg-gray-900/50 text-white placeholder-gray-700 focus:outline-none focus:border-amber-500/50 font-light text-sm transition-all"
+                required
+              />
+            </div>
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/60 placeholder-amber-600/50"
-              required
-            />
+            <div>
+              <label className="block text-xs text-gray-700 mb-2 font-light tracking-wider uppercase">Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-800 bg-gray-900/50 text-white placeholder-gray-700 focus:outline-none focus:border-amber-500/50 font-light text-sm transition-all"
+                required
+              />
+            </div>
 
             {!isLogin && (
               <div className="flex items-start gap-3">
@@ -199,33 +162,34 @@ export default function AuthPage() {
                   name="acceptTerms"
                   checked={formData.acceptTerms}
                   onChange={handleChange}
-                  className="mt-1 w-4 h-4 text-amber-600 border-amber-300 rounded focus:ring-amber-500"
+                  className="mt-1 w-4 h-4 bg-gray-900/50 border-gray-800 focus:ring-amber-500 text-amber-500"
                 />
-                <span className="text-sm text-amber-700/80 leading-5">
-                  I agree to the {" "}
-                  <a href="#" className="text-amber-700 hover:underline font-medium">terms</a>
+                <span className="text-xs text-gray-600 font-light leading-5">
+                  I agree to the{" "}
+                  <a href="#" className="text-gray-500 hover:text-white transition-colors">terms</a>
                   {" and "}
-                  <a href="#" className="text-amber-700 hover:underline font-medium">privacy policy</a>
+                  <a href="#" className="text-gray-500 hover:text-white transition-colors">privacy policy</a>
                 </span>
               </div>
             )}
 
             <button
-              type="submit"
+              onClick={handleSubmit}
               disabled={loading}
-              className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 px-4 rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg disabled:opacity-50"
+              className="group w-full bg-amber-500 text-black py-3 px-4 font-light text-sm tracking-wide hover:bg-amber-400 focus:outline-none transition-all disabled:opacity-50 flex items-center justify-center gap-3"
             >
               {loading ? "Loading..." : isLogin ? "Sign In" : "Create Account"}
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform stroke-[1.5]" />
             </button>
-          </form>
+          </div>
 
-          <div className="mt-6 text-center">
+          <div className="mt-8 text-center">
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="text-sm text-amber-700/70 hover:text-amber-700 transition-colors"
+              className="text-sm text-gray-600 hover:text-white transition-colors font-light"
             >
               {isLogin ? "Don't have an account? " : "Already have an account? "}
-              <span className="font-semibold text-amber-700">
+              <span className="text-gray-400 hover:text-white">
                 {isLogin ? "Sign up" : "Sign in"}
               </span>
             </button>
