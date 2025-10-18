@@ -1,59 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth, db } from "@/lib/firebase";
-import { doc, getDoc, collection, getDocs, query, limit } from "firebase/firestore";
+import { TrendingUp, Users, Briefcase, LogOut, ArrowRight, Building2, DollarSign, Activity } from "lucide-react";
 
 export default function DashboardPage() {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [startups, setStartups] = useState([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (!currentUser || !currentUser.emailVerified) {
-        router.push("/auth");
-      } else {
-        setUser(currentUser);
-        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        if (userDoc.exists()) {
-          setUserProfile(userDoc.data());
-        }
-        const startupsQuery = query(collection(db, "startups"), limit(6));
-        const startupsSnapshot = await getDocs(startupsQuery);
-        const startupsData = startupsSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setStartups(startupsData);
-        setLoading(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [router]);
+    // Add your Firebase authentication logic here
+    // This is just the UI shell
+    setLoading(false);
+  }, []);
 
   const handleLogout = async () => {
     if (confirm("Are you sure you want to logout?")) {
-      try {
-        await signOut(auth);
-        router.push("/");
-      } catch (error) {
-        console.error("Logout error:", error);
-      }
+      console.log("Logout");
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-amber-700 font-medium">Loading your dashboard...</p>
+          <div className="w-16 h-16 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mx-auto mb-6"></div>
+          <p className="text-gray-600 font-light tracking-wide">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -61,17 +34,14 @@ export default function DashboardPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 flex items-center justify-center p-4 pt-70">
-        <div className="bg-white rounded-2xl shadow-xl p-8 text-center max-w-md">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-red-600 text-2xl">⚠</span>
+      <div className="min-h-screen bg-black flex items-center justify-center p-6">
+        <div className="border border-gray-900 p-12 text-center max-w-md">
+          <div className="w-16 h-16 border border-red-900/30 flex items-center justify-center mx-auto mb-6">
+            <span className="text-red-500 text-2xl">⚠</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Authentication Required</h2>
-          <p className="text-gray-600 mb-6">Please sign in to access your dashboard</p>
-          <button
-            onClick={() => router.push("/auth")}
-            className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
-          >
+          <h2 className="text-2xl font-light text-white mb-4 tracking-tight">Authentication Required</h2>
+          <p className="text-gray-600 mb-8 font-light">Please sign in to access your dashboard</p>
+          <button className="bg-amber-500 text-black px-8 py-3 font-light tracking-wide hover:bg-amber-400 transition-all w-full">
             Go to Sign In
           </button>
         </div>
@@ -80,43 +50,46 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 pt-34">
+    <div className="min-h-screen bg-black">
+      {/* Subtle texture */}
+      <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
       
-      {/* Logout Button Top Right */}
-      <div className="flex justify-end max-w-7xl mx-auto px-4 pt-6">
+      {/* Logout Button */}
+      <div className="relative z-10 flex justify-end max-w-7xl mx-auto px-6 pt-8">
         <button
           onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-6 rounded-xl shadow-md transition-all"
+          className="flex items-center gap-2 border border-gray-800 text-gray-500 hover:text-red-400 hover:border-red-900/30 px-6 py-2 font-light text-sm tracking-wide transition-all"
         >
+          <LogOut className="w-4 h-4 stroke-[1.5]" />
           Logout
         </button>
       </div>
 
       {/* User Profile Card */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-amber-200/30 mb-8 hover:bg-white/90 transition-all">
-          <div className="flex flex-col md:flex-row md:items-center gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-20 h-20 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-2xl">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
+        <div className="border border-gray-900 p-8 mb-12">
+          <div className="flex flex-col md:flex-row md:items-center gap-8">
+            <div className="flex items-center gap-6">
+              <div className="w-20 h-20 bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
+                <span className="text-white font-light text-2xl">
                   {userProfile?.name?.[0] || user?.displayName?.[0] || user?.email?.[0]?.toUpperCase()}
                 </span>
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-3xl font-light text-white tracking-tight mb-2">
                   {userProfile?.name || user?.displayName || 'User'}
                 </h2>
-                <p className="text-gray-600 mb-1">{user?.email}</p>
-                <div className="flex items-center gap-2">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                <p className="text-gray-600 font-light text-sm mb-3">{user?.email}</p>
+                <div className="flex items-center gap-3">
+                  <span className={`px-3 py-1 text-xs font-light tracking-wide ${
                     user?.emailVerified 
-                      ? 'bg-green-100 text-green-700' 
-                      : 'bg-yellow-100 text-yellow-700'
+                      ? 'border border-green-900/30 text-green-500' 
+                      : 'border border-yellow-900/30 text-yellow-500'
                   }`}>
-                    {user?.emailVerified ? '✓ Verified' : '⚠ Unverified'}
+                    {user?.emailVerified ? 'Verified' : 'Unverified'}
                   </span>
                   {userProfile?.userType && (
-                    <span className="px-2 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-medium capitalize">
+                    <span className="px-3 py-1 border border-amber-500/30 text-amber-500 text-xs font-light tracking-wide capitalize">
                       {userProfile.userType}
                     </span>
                   )}
@@ -124,28 +97,28 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center md:text-left">
-                <p className="text-sm text-gray-600">Member Since</p>
-                <p className="font-semibold text-gray-800">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 md:pl-8 md:border-l md:border-gray-900">
+              <div>
+                <p className="text-xs text-gray-700 font-light mb-2 tracking-wider uppercase">Member Since</p>
+                <p className="font-light text-white text-sm">
                   {user?.metadata?.creationTime ? 
                     new Date(user.metadata.creationTime).toLocaleDateString() : 
                     'Recently'
                   }
                 </p>
               </div>
-              <div className="text-center md:text-left">
-                <p className="text-sm text-gray-600">Last Sign In</p>
-                <p className="font-semibold text-gray-800">
+              <div>
+                <p className="text-xs text-gray-700 font-light mb-2 tracking-wider uppercase">Last Sign In</p>
+                <p className="font-light text-white text-sm">
                   {user?.metadata?.lastSignInTime ? 
                     new Date(user.metadata.lastSignInTime).toLocaleDateString() : 
                     'Today'
                   }
                 </p>
               </div>
-              <div className="text-center md:text-left">
-                <p className="text-sm text-gray-600">Profile Status</p>
-                <p className="font-semibold text-gray-800">
+              <div>
+                <p className="text-xs text-gray-700 font-light mb-2 tracking-wider uppercase">Profile Status</p>
+                <p className="font-light text-white text-sm">
                   {userProfile ? 'Complete' : 'Incomplete'}
                 </p>
               </div>
@@ -153,121 +126,135 @@ export default function DashboardPage() {
           </div>
           
           {userProfile?.bio && (
-            <div className="mt-4 pt-4 border-t border-amber-200/30">
-              <p className="text-sm text-gray-600 mb-1">Bio</p>
-              <p className="text-gray-800">{userProfile.bio}</p>
+            <div className="mt-8 pt-8 border-t border-gray-900">
+              <p className="text-xs text-gray-700 font-light mb-3 tracking-wider uppercase">Bio</p>
+              <p className="text-gray-600 font-light leading-relaxed">{userProfile.bio}</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Discover. <span className="text-amber-600">Invest.</span> <span className="text-orange-600">Grow.</span>
+      <main className="relative z-10 max-w-7xl mx-auto px-6 pb-16">
+        <div className="mb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+            <span className="text-xs tracking-[0.3em] text-amber-500/70 font-light uppercase">Dashboard</span>
+          </div>
+          <h2 className="text-6xl font-light text-white mb-6 tracking-tight leading-tight">
+            Investment <span className="text-amber-500/90">Overview</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl">
-            Connect with revolutionary startups and transform your investment portfolio with next-generation companies.
+          <p className="text-xl text-gray-600 font-light max-w-2xl">
+            Track your portfolio, discover opportunities, and connect with revolutionary startups.
           </p>
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {/* Active Startups */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-amber-200/30 hover:bg-white/70 transition-all">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl flex items-center justify-center">
-                <span className="text-white text-xl">📈</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="border border-gray-900 p-8 hover:border-gray-800 transition-all group">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 border border-gray-800 flex items-center justify-center group-hover:border-amber-500/30 transition-all">
+                <TrendingUp className="w-6 h-6 text-amber-500/70 stroke-[1.5]" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-800">Active Startups</h3>
+              <h3 className="text-sm font-light text-gray-600 tracking-wide uppercase">Active Startups</h3>
             </div>
-            <p className="text-3xl font-bold text-gray-800">{startups.length}</p>
+            <p className="text-5xl font-light text-white tracking-tight">{startups.length}</p>
           </div>
 
-          {/* Total Funding */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-amber-200/30 hover:bg-white/70 transition-all">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center">
-                <span className="text-white text-xl">💰</span>
+          <div className="border border-gray-900 p-8 hover:border-gray-800 transition-all group">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 border border-gray-800 flex items-center justify-center group-hover:border-amber-500/30 transition-all">
+                <DollarSign className="w-6 h-6 text-amber-500/70 stroke-[1.5]" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-800">Total Funding</h3>
+              <h3 className="text-sm font-light text-gray-600 tracking-wide uppercase">Total Funding</h3>
             </div>
-            <p className="text-3xl font-bold text-gray-800">
-              ${startups.reduce((total, s) => total + (s.fundingRaised || 0), 0).toLocaleString()}
+            <p className="text-5xl font-light text-white tracking-tight">
+              ${(startups.reduce((total, s) => total + (s.fundingRaised || 0), 0) / 1000000).toFixed(1)}M
             </p>
           </div>
 
-          {/* Connections */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-amber-200/30 hover:bg-white/70 transition-all">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl flex items-center justify-center">
-                <span className="text-white text-xl">🤝</span>
+          <div className="border border-gray-900 p-8 hover:border-gray-800 transition-all group">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 border border-gray-800 flex items-center justify-center group-hover:border-amber-500/30 transition-all">
+                <Users className="w-6 h-6 text-amber-500/70 stroke-[1.5]" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-800">Connections</h3>
+              <h3 className="text-sm font-light text-gray-600 tracking-wide uppercase">Connections</h3>
             </div>
-            <p className="text-3xl font-bold text-gray-800">
+            <p className="text-5xl font-light text-white tracking-tight">
               {startups.reduce((total, s) => total + (s.connections || 0), 0)}
             </p>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-4 mb-12">
-          <button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
-            🚀 Register Your Startup
+        <div className="flex flex-wrap gap-4 mb-16">
+          <button className="group bg-amber-500 text-black px-8 py-4 font-light tracking-wide hover:bg-amber-400 transition-all flex items-center gap-3">
+            Register Your Startup
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform stroke-[1.5]" />
           </button>
-          <button className="bg-white/80 border-2 border-amber-300 text-amber-700 px-8 py-4 rounded-xl font-semibold hover:bg-amber-50 hover:border-amber-400 transition-all">
-            👥 Browse Investors
+          <button className="border border-gray-800 text-gray-500 hover:text-white hover:border-gray-700 px-8 py-4 font-light tracking-wide transition-all">
+            Browse Investors
           </button>
-          <button className="bg-white/80 border-2 border-amber-300 text-amber-700 px-8 py-4 rounded-xl font-semibold hover:bg-amber-50 hover:border-amber-400 transition-all">
-            📊 View Analytics
+          <button className="border border-gray-800 text-gray-500 hover:text-white hover:border-gray-700 px-8 py-4 font-light tracking-wide transition-all">
+            View Analytics
           </button>
         </div>
 
         {/* Featured Startups */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-bold text-gray-800">Featured Startups</h3>
-            <button className="text-amber-600 hover:text-amber-700 font-medium hover:underline transition-all">View All →</button>
+        <div>
+          <div className="flex justify-between items-center mb-12">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+                <span className="text-xs tracking-[0.3em] text-amber-500/70 font-light uppercase">Portfolio</span>
+              </div>
+              <h3 className="text-3xl font-light text-white tracking-tight">Featured Startups</h3>
+            </div>
+            <button className="text-amber-500/70 hover:text-amber-500 font-light text-sm tracking-wide transition-all flex items-center gap-2">
+              View All
+              <ArrowRight className="w-4 h-4 stroke-[1.5]" />
+            </button>
           </div>
 
           {startups.length === 0 ? (
-            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-12 border border-amber-200/30 text-center">
-              <div className="w-24 h-24 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-4xl">🏢</span>
+            <div className="border border-gray-900 p-16 text-center">
+              <div className="w-16 h-16 border border-gray-800 flex items-center justify-center mx-auto mb-8">
+                <Building2 className="w-8 h-8 text-gray-700 stroke-[1.5]" />
               </div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-3">No Startups Yet</h4>
-              <p className="text-gray-600 mb-6 max-w-md mx-auto">
+              <h4 className="text-2xl font-light text-white mb-4 tracking-tight">No Startups Yet</h4>
+              <p className="text-gray-600 mb-8 max-w-md mx-auto font-light">
                 Be the first to showcase your startup on Nexora. Connect with investors and grow your business.
               </p>
-              <button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all hover:shadow-md">
+              <button className="bg-amber-500 text-black px-8 py-3 font-light tracking-wide hover:bg-amber-400 transition-all">
                 Add Your Startup
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {startups.map(startup => (
-                <div key={startup.id} className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-amber-200/30 hover:shadow-xl transition-all hover:scale-105 hover:bg-white/90">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-amber-400 to-orange-500 rounded-xl flex items-center justify-center">
-                      <span className="text-white font-bold">{startup.name?.[0]}</span>
+                <div key={startup.id} className="border border-gray-900 hover:border-gray-800 transition-all group">
+                  <div className="p-8">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
+                        <span className="text-white font-light">{startup.name?.[0]}</span>
+                      </div>
+                      <div>
+                        <h4 className="font-light text-white tracking-tight">{startup.name}</h4>
+                        <p className="text-xs text-gray-600 font-light">{startup.industry}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800">{startup.name}</h4>
-                      <p className="text-sm text-gray-600">{startup.industry}</p>
+                    <p className="text-gray-600 mb-6 text-sm font-light leading-relaxed line-clamp-3">
+                      {startup.description}
+                    </p>
+                    <div className="flex justify-between items-center pt-6 border-t border-gray-900">
+                      <span className="text-sm font-light text-amber-500">
+                        ${startup.fundingGoal?.toLocaleString()}
+                      </span>
+                      <button className="text-gray-500 hover:text-white font-light text-sm tracking-wide transition-all flex items-center gap-2">
+                        Connect
+                        <ArrowRight className="w-4 h-4 stroke-[1.5]" />
+                      </button>
                     </div>
-                  </div>
-                  <p className="text-gray-600 mb-4 text-sm line-clamp-3">
-                    {startup.description}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-amber-600">
-                      ${startup.fundingGoal?.toLocaleString()} goal
-                    </span>
-                    <button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all hover:shadow-md">
-                      Connect
-                    </button>
                   </div>
                 </div>
               ))}
