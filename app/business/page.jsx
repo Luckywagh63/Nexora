@@ -2,12 +2,11 @@
 import dbConnect from '@/lib/dbConnect';
 import Startup from '@/models/Startup';
 import Link from 'next/link';
-import { Building2, DollarSign, MapPin, Users, Calendar, ArrowRight, CheckCircle, XCircle } from 'lucide-react';
+import { Building2, DollarSign, MapPin, Users, Calendar, ArrowRight, CheckCircle, XCircle, TrendingUp } from 'lucide-react';
 
 export default async function BusinessPage() {
   await dbConnect();
   const startups = await Startup.find({ status: 'approved' }).lean();
-
 
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-US', {
@@ -29,51 +28,46 @@ export default async function BusinessPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-2">
-              <Building2 className="h-8 w-8 text-orange-500" />
-              <span className="text-2xl font-bold text-slate-800">Nexora</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/form" className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors">
-                Add Startup
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-black">
+      {/* Subtle texture */}
+      <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
+
+    
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 py-16">
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative py-24 border-b border-gray-900">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Innovative Startups
+            <div className="flex items-center gap-3 mb-8 justify-center">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+              <span className="text-xs tracking-[0.3em] text-amber-500/70 font-light uppercase">Investment Portfolio</span>
+            </div>
+            
+            <h1 className="text-6xl md:text-7xl font-light text-white mb-6 tracking-tight leading-tight">
+              Featured Investment
+              <span className="block text-amber-500/90 mt-2">Opportunities</span>
             </h1>
-            <p className="text-xl text-slate-200 mb-8 max-w-3xl mx-auto">
-              Discover the next generation of companies revolutionizing construction, real estate, and technology
+            
+            <p className="text-xl text-gray-500 mb-16 font-light max-w-3xl mx-auto leading-relaxed">
+              Curated portfolio of high-growth companies across technology, healthcare, and sustainable industries
             </p>
-            <div className="flex items-center justify-center space-x-8 text-white">
+            
+            <div className="grid grid-cols-3 gap-12 max-w-3xl mx-auto pt-12 border-t border-gray-900">
               <div className="text-center">
-                <div className="text-3xl font-bold text-orange-400">{startups.length}</div>
-                <div className="text-sm text-slate-300">Active Startups</div>
+                <div className="text-5xl font-light text-white mb-2 tracking-tight">{startups.length}</div>
+                <div className="text-xs text-gray-600 font-light tracking-wide uppercase">Active Companies</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-orange-400">
+                <div className="text-5xl font-light text-white mb-2 tracking-tight">
                   {startups.filter(s => s.generatingRevenue === 'yes').length}
                 </div>
-                <div className="text-sm text-slate-300">Revenue Generating</div>
+                <div className="text-xs text-gray-600 font-light tracking-wide uppercase">Revenue Positive</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-orange-400">
+                <div className="text-5xl font-light text-white mb-2 tracking-tight">
                   {startups.filter(s => s.isUSIncorporated === 'yes').length}
                 </div>
-                <div className="text-sm text-slate-300">US Incorporated</div>
+                <div className="text-xs text-gray-600 font-light tracking-wide uppercase">US Incorporated</div>
               </div>
             </div>
           </div>
@@ -81,46 +75,56 @@ export default async function BusinessPage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-20">
         {startups.length === 0 ? (
-          <div className="text-center py-16">
-            <Building2 className="h-16 w-16 text-slate-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-slate-600 mb-2">No startups listed yet</h3>
-            <p className="text-slate-500 mb-6">Be the first to add your startup to our platform</p>
-            <Link href="/form" className="bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors inline-flex items-center space-x-2">
-              <span>Add Your Startup</span>
-              <ArrowRight className="h-4 w-4" />
+          <div className="text-center py-32">
+            <div className="w-20 h-20 border border-gray-800 flex items-center justify-center mx-auto mb-8">
+              <Building2 className="w-10 h-10 text-gray-700 stroke-[1.5]" />
+            </div>
+            <h3 className="text-3xl font-light text-white mb-4 tracking-tight">No Active Listings</h3>
+            <p className="text-gray-500 mb-12 font-light text-lg">Be among the first to present your investment opportunity</p>
+            <Link href="/form" className="inline-flex items-center gap-2 bg-amber-500 text-black px-8 py-4 font-light tracking-wide hover:bg-amber-400 transition-all">
+              Submit Your Proposal
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-16">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-slate-800 mb-4">Featured Startups</h2>
-              <p className="text-slate-600 max-w-2xl mx-auto">
-                Explore innovative companies that are shaping the future of their industries
+              <div className="flex items-center gap-3 mb-8 justify-center">
+                <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+                <span className="text-xs tracking-[0.3em] text-amber-500/70 font-light uppercase">Current Listings</span>
+              </div>
+              <h2 className="text-5xl font-light text-white tracking-tight mb-6">
+                Investment Portfolio
+              </h2>
+              <p className="text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
+                Rigorously vetted companies positioned for institutional investment
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {startups.map((startup) => (
-                <div key={startup._id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+                <div key={startup._id} className="group cursor-pointer border border-gray-900 hover:border-gray-800 transition-all">
                   {/* Card Header */}
-                  <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 text-white">
-                    <div className="flex items-center justify-between mb-3">
-                      <Building2 className="h-8 w-8" />
-                      <span className="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full text-black">
+                  <div className="bg-gray-900 border-b border-gray-800 p-8">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-12 h-12 border border-gray-800 flex items-center justify-center">
+                        <Building2 className="w-6 h-6 text-amber-500/70 stroke-[1.5]" />
+                      </div>
+                      <span className="text-xs bg-amber-500/10 border border-amber-500/30 px-3 py-1 text-amber-500/90 font-light tracking-wider uppercase">
                         {startup.industry}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold mb-2">{startup.name}</h3>
-                    <p className="text-orange-100 text-sm">
-                      Founded by {startup.firstName} {startup.lastName}
+                    <h3 className="text-2xl font-light text-white mb-2 tracking-tight">{startup.name}</h3>
+                    <p className="text-gray-500 text-sm font-light">
+                      {startup.firstName} {startup.lastName}
                     </p>
                   </div>
 
                   {/* Card Body */}
-                  <div className="p-6">
-                    <p className="text-slate-600 mb-4 line-clamp-3">
+                  <div className="p-8">
+                    <p className="text-gray-500 mb-8 font-light leading-relaxed text-sm line-clamp-3">
                       {startup.description.length > 120 
                         ? `${startup.description.substring(0, 120)}...` 
                         : startup.description
@@ -128,50 +132,50 @@ export default async function BusinessPage() {
                     </p>
 
                     {/* Status Indicators */}
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                      <div className="flex items-center space-x-2">
+                    <div className="grid grid-cols-2 gap-4 mb-8 pb-8 border-b border-gray-900">
+                      <div className="flex items-center gap-2">
                         {startup.productAvailable === 'yes' ? (
-                          <CheckCircle className="h-4 w-4 text-green-500" />
+                          <CheckCircle className="w-4 h-4 text-amber-500/70 stroke-[1.5]" />
                         ) : (
-                          <XCircle className="h-4 w-4 text-slate-400" />
+                          <XCircle className="w-4 h-4 text-gray-700 stroke-[1.5]" />
                         )}
-                        <span className="text-sm text-slate-600">Product Available</span>
+                        <span className="text-xs text-gray-600 font-light">Market Ready</span>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center gap-2">
                         {startup.generatingRevenue === 'yes' ? (
-                          <CheckCircle className="h-4 w-4 text-green-500" />
+                          <CheckCircle className="w-4 h-4 text-amber-500/70 stroke-[1.5]" />
                         ) : (
-                          <XCircle className="h-4 w-4 text-slate-400" />
+                          <XCircle className="w-4 h-4 text-gray-700 stroke-[1.5]" />
                         )}
-                        <span className="text-sm text-slate-600">Revenue Generating</span>
+                        <span className="text-xs text-gray-600 font-light">Revenue Positive</span>
                       </div>
                     </div>
 
                     {/* Key Metrics */}
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center space-x-2 text-sm text-slate-600">
-                        <DollarSign className="h-4 w-4 text-orange-500" />
-                        <span>Funding: {formatFunding(startup.fundingAmount)}</span>
+                    <div className="space-y-4 mb-8">
+                      <div className="flex items-center gap-2 text-sm text-gray-500 font-light">
+                        <DollarSign className="w-4 h-4 text-amber-500/70" />
+                        <span>{formatFunding(startup.fundingAmount)}</span>
                       </div>
-                      <div className="flex items-center space-x-2 text-sm text-slate-600">
-                        <MapPin className="h-4 w-4 text-orange-500" />
+                      <div className="flex items-center gap-2 text-sm text-gray-500 font-light">
+                        <MapPin className="w-4 h-4 text-amber-500/70" />
                         <span>
                           {startup.isUSIncorporated === 'yes' ? 'US Incorporated' : 'International'}
                         </span>
                       </div>
-                      <div className="flex items-center space-x-2 text-sm text-slate-600">
-                        <Calendar className="h-4 w-4 text-orange-500" />
-                        <span>Listed: {formatDate(startup.createdAt)}</span>
+                      <div className="flex items-center gap-2 text-sm text-gray-500 font-light">
+                        <Calendar className="w-4 h-4 text-amber-500/70" />
+                        <span>{formatDate(startup.createdAt)}</span>
                       </div>
                     </div>
 
                     {/* Action Button */}
                     <Link 
                       href={`/show/${startup._id}`} 
-                      className="w-full bg-slate-100 hover:bg-gray-700 text-slate-700 hover:text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 group"
+                      className="w-full border border-gray-800 hover:border-gray-700 text-gray-400 hover:text-white py-4 px-4 font-light tracking-wide transition-all flex items-center justify-center gap-2 group"
                     >
-                      <span>View Details</span>
-                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      <span>View Profile</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </div>
@@ -182,34 +186,43 @@ export default async function BusinessPage() {
       </div>
 
       {/* Call to Action */}
-      <div className="bg-gradient-to-r from-orange-500 to-orange-600 py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Ready to Join Our Platform?</h2>
-          <p className="text-xl text-orange-100 mb-8">
-            Showcase your startup to potential investors and partners
+      <div className="border-t border-gray-900 py-32">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="w-16 h-16 border border-amber-500/30 flex items-center justify-center mx-auto mb-12">
+            <Building2 className="w-8 h-8 text-amber-500/70 stroke-[1.5]" />
+          </div>
+          
+          <h2 className="text-5xl font-light text-white mb-8 tracking-tight leading-tight">
+            Ready to Present Your
+            <span className="block text-amber-500/90 mt-2">Investment Opportunity?</span>
+          </h2>
+          
+          <p className="text-xl text-gray-500 mb-12 font-light max-w-2xl mx-auto leading-relaxed">
+            Submit your proposal to our investment committee for consideration
           </p>
-          <Link href="/form" className="bg-white text-orange-500 px-8 py-3 rounded-lg font-bold hover:bg-orange-50 transition-colors inline-flex items-center space-x-2">
-            <span>Add Your Startup</span>
-            <ArrowRight className="h-5 w-5" />
+          
+          <Link href="/form" className="inline-flex items-center gap-2 bg-amber-500 text-black px-12 py-4 font-light tracking-wide hover:bg-amber-400 transition-all">
+            Submit Proposal
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="bg-slate-800 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Building2 className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-bold">Nexora</span>
+      <div className="border-t border-gray-900 py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+            <span className="text-xl font-light text-white tracking-tight">Nexora</span>
           </div>
-          <p className="text-slate-400 text-center mb-4">Building Your Vision with Precision</p>
-          <div className="flex justify-center space-x-8 text-sm">
-            <Link href="/form" className="text-slate-400 hover:text-white transition-colors">
-              Add Startup
+          <p className="text-gray-600 text-center mb-6 font-light">Strategic Investment Opportunities</p>
+          <div className="flex justify-center gap-8 text-sm">
+            <Link href="/form" className="text-gray-600 hover:text-gray-400 transition-colors font-light">
+              Submit Proposal
             </Link>
-            <span className="text-slate-600">|</span>
-            <span className="text-slate-400">
-              Contact: support@nexora.com
+            <span className="text-gray-800">|</span>
+            <span className="text-gray-600 font-light">
+              investment@nexora.com
             </span>
           </div>
         </div>
