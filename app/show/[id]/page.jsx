@@ -26,16 +26,18 @@ export default async function ShowPage({ params: rawParams }) {
 
   await dbConnect();
   const startup = await Startup.findById(id).lean();
+  
   if (!startup) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
-        <div className="text-center">
-          <Building2 className="h-16 w-16 text-slate-400 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-slate-800 mb-2">Startup Not Found</h1>
-          <p className="text-slate-600 mb-6">The startup you're looking for doesn't exist or has been removed.</p>
-          <Link href="/business" className="bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors inline-flex items-center space-x-2">
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back to Startups</span>
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
+        <div className="text-center relative z-10">
+          <Building2 className="w-16 h-16 text-gray-700 mx-auto mb-6 stroke-[1.5]" />
+          <h1 className="text-3xl font-light text-white mb-4 tracking-tight">Company Not Found</h1>
+          <p className="text-gray-500 mb-8 font-light">The company profile you're looking for is unavailable.</p>
+          <Link href="/business" className="inline-flex items-center gap-2 bg-amber-500 text-black px-8 py-4 font-light tracking-wide hover:bg-amber-400 transition-all">
+            <ArrowLeft className="w-4 h-4" />
+            Return to Portfolio
           </Link>
         </div>
       </div>
@@ -65,21 +67,24 @@ export default async function ShowPage({ params: rawParams }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="min-h-screen bg-black">
+      {/* Subtle texture */}
+      <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
+
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-2">
-              <Building2 className="h-8 w-8 text-orange-500" />
-              <span className="text-2xl font-bold text-slate-800">Nexora</span>
+      <div className="relative border-b border-gray-900">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-20">
+            <div className="flex items-center gap-3">
+              <div className="h-px w-8 bg-gradient-to-r from-transparent to-amber-500/50" />
+              <span className="text-2xl font-light text-white tracking-tight">Nexora</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/business" className="text-slate-600 hover:text-orange-500 text-sm font-medium transition-colors">
-                All Startups
+            <div className="flex items-center gap-6">
+              <Link href="/business" className="text-gray-400 hover:text-white text-sm font-light tracking-wide transition-colors">
+                All Companies
               </Link>
-              <Link href="/form" className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors">
-                Add Startup
+              <Link href="/form" className="bg-amber-500 text-black px-6 py-3 font-light tracking-wide hover:bg-amber-400 transition-all">
+                Submit Proposal
               </Link>
             </div>
           </div>
@@ -87,37 +92,38 @@ export default async function ShowPage({ params: rawParams }) {
       </div>
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 py-16">
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-6">
-            <Link href="/business" className="text-slate-300 hover:text-white transition-colors inline-flex items-center space-x-2">
-              <ArrowLeft className="h-4 w-4" />
-              <span>Back to All Startups</span>
+      <div className="relative py-20 border-b border-gray-900">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center gap-2 mb-12">
+            <ArrowLeft className="w-4 h-4 text-gray-600" />
+            <Link href="/business" className="text-gray-400 hover:text-white transition-colors font-light text-sm tracking-wide">
+              Back to Portfolio
             </Link>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 items-center">
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
-                <Building2 className="h-12 w-12 text-orange-400" />
+          <div className="grid lg:grid-cols-3 gap-12">
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 border border-gray-800 flex items-center justify-center">
+                  <Building2 className="w-8 h-8 text-amber-500/70 stroke-[1.5]" />
+                </div>
                 <div>
-                  <h1 className="text-4xl md:text-5xl font-bold text-white">
+                  <h1 className="text-5xl font-light text-white tracking-tight mb-2">
                     {startup.name}
                   </h1>
-                  <p className="text-xl text-slate-200 mt-2">
-                    Founded by {startup.firstName} {startup.lastName}
+                  <p className="text-xl text-gray-500 font-light">
+                    {startup.firstName} {startup.lastName}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4 text-white">
-                <span className="bg-orange-500 px-4 py-2 rounded-full text-sm font-medium">
+              <div className="flex items-center gap-6 text-white">
+                <span className="bg-amber-500/10 border border-amber-500/30 px-4 py-2 text-sm font-light text-amber-500/90 tracking-wide">
                   {startup.industry}
                 </span>
-                <div className="flex items-center space-x-2">
-                  <MapPin className="h-4 w-4" />
-                  <span className="text-sm">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-sm font-light">
                     {startup.isUSIncorporated === 'yes' ? 'US Incorporated' : 'International'}
                   </span>
                 </div>
@@ -125,31 +131,31 @@ export default async function ShowPage({ params: rawParams }) {
             </div>
 
             {/* Status Card */}
-            <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 text-black">
-              <h3 className="text-lg font-semibold mb-4">Company Status</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Product Available</span>
+            <div className="bg-gray-900 border border-gray-800 p-8">
+              <h3 className="text-lg font-light text-white mb-6 tracking-tight">Company Status</h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between pb-4 border-b border-gray-800">
+                  <span className="text-sm font-light text-gray-400">Product Available</span>
                   {startup.productAvailable === 'yes' ? (
-                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <CheckCircle className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
                   ) : (
-                    <XCircle className="h-5 w-5 text-slate-400" />
+                    <XCircle className="w-5 h-5 text-gray-700 stroke-[1.5]" />
                   )}
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Generating Revenue</span>
+                <div className="flex items-center justify-between pb-4 border-b border-gray-800">
+                  <span className="text-sm font-light text-gray-400">Revenue Generating</span>
                   {startup.generatingRevenue === 'yes' ? (
-                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <CheckCircle className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
                   ) : (
-                    <XCircle className="h-5 w-5 text-slate-400" />
+                    <XCircle className="w-5 h-5 text-gray-700 stroke-[1.5]" />
                   )}
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">US Incorporated</span>
+                  <span className="text-sm font-light text-gray-400">US Incorporated</span>
                   {startup.isUSIncorporated === 'yes' ? (
-                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <CheckCircle className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
                   ) : (
-                    <XCircle className="h-5 w-5 text-slate-400" />
+                    <XCircle className="w-5 h-5 text-gray-700 stroke-[1.5]" />
                   )}
                 </div>
               </div>
@@ -159,84 +165,84 @@ export default async function ShowPage({ params: rawParams }) {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="grid lg:grid-cols-3 gap-12">
           {/* Main Content Column */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-12">
             {/* About Section */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <FileText className="h-6 w-6 text-orange-500" />
-                <h2 className="text-2xl font-bold text-slate-800">About {startup.name}</h2>
+            <div className="bg-gray-900 border border-gray-800 p-10">
+              <div className="flex items-center gap-3 mb-8">
+                <FileText className="w-6 h-6 text-amber-500/70 stroke-[1.5]" />
+                <h2 className="text-3xl font-light text-white tracking-tight">Overview</h2>
               </div>
-              <p className="text-slate-700 leading-relaxed text-lg">
+              <p className="text-gray-400 leading-relaxed text-lg font-light">
                 {startup.description}
               </p>
             </div>
 
             {/* Company Details */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <Building className="h-6 w-6 text-orange-500" />
-                <h2 className="text-2xl font-bold text-slate-800">Company Details</h2>
+            <div className="bg-gray-900 border border-gray-800 p-10">
+              <div className="flex items-center gap-3 mb-8">
+                <Building className="w-6 h-6 text-amber-500/70 stroke-[1.5]" />
+                <h2 className="text-3xl font-light text-white tracking-tight">Company Profile</h2>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-6">
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">
-                      Industry
+                    <h3 className="text-xs font-light text-gray-600 uppercase tracking-[0.2em] mb-3">
+                      Industry Sector
                     </h3>
-                    <p className="text-slate-800 font-medium">{startup.industry}</p>
+                    <p className="text-white font-light text-lg">{startup.industry}</p>
                   </div>
 
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">
-                      Incorporation Status
+                    <h3 className="text-xs font-light text-gray-600 uppercase tracking-[0.2em] mb-3">
+                      Incorporation
                     </h3>
-                    <div className="flex items-center space-x-2">
-                      <MapPin className="h-4 w-4 text-orange-500" />
-                      <span className="text-slate-800 font-medium">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-amber-500/70" />
+                      <span className="text-white font-light text-lg">
                         {startup.isUSIncorporated === 'yes' ? 'United States' : 'International'}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                    <h3 className="text-xs font-light text-gray-600 uppercase tracking-[0.2em] mb-3">
                       Product Status
                     </h3>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-2">
                       {startup.productAvailable === 'yes' ? (
                         <>
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                          <span className="text-slate-800 font-medium">Available in Market</span>
+                          <CheckCircle className="w-4 h-4 text-amber-500/70" />
+                          <span className="text-white font-light text-lg">Market Ready</span>
                         </>
                       ) : (
                         <>
-                          <XCircle className="h-4 w-4 text-slate-400" />
-                          <span className="text-slate-800 font-medium">In Development</span>
+                          <XCircle className="w-4 h-4 text-gray-700" />
+                          <span className="text-white font-light text-lg">In Development</span>
                         </>
                       )}
                     </div>
                   </div>
 
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                    <h3 className="text-xs font-light text-gray-600 uppercase tracking-[0.2em] mb-3">
                       Revenue Status
                     </h3>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-2">
                       {startup.generatingRevenue === 'yes' ? (
                         <>
-                          <TrendingUp className="h-4 w-4 text-green-500" />
-                          <span className="text-slate-800 font-medium">Revenue Generating</span>
+                          <TrendingUp className="w-4 h-4 text-amber-500/70" />
+                          <span className="text-white font-light text-lg">Revenue Positive</span>
                         </>
                       ) : (
                         <>
-                          <XCircle className="h-4 w-4 text-slate-400" />
-                          <span className="text-slate-800 font-medium">Pre-Revenue</span>
+                          <XCircle className="w-4 h-4 text-gray-700" />
+                          <span className="text-white font-light text-lg">Pre-Revenue</span>
                         </>
                       )}
                     </div>
@@ -246,51 +252,49 @@ export default async function ShowPage({ params: rawParams }) {
             </div>
 
             {/* Funding Information */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <DollarSign className="h-6 w-6 text-orange-500" />
-                <h2 className="text-2xl font-bold text-slate-800">Funding Information</h2>
+            <div className="bg-gray-900 border border-gray-800 p-10">
+              <div className="flex items-center gap-3 mb-8">
+                <DollarSign className="w-6 h-6 text-amber-500/70 stroke-[1.5]" />
+                <h2 className="text-3xl font-light text-white tracking-tight">Capital Structure</h2>
               </div>
 
-              <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg p-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-orange-600 mb-2">
-                    {formatFunding(startup.fundingAmount)}
-                  </div>
-                  <p className="text-orange-700 font-medium">Total Funding Raised</p>
-                  <p className="text-sm text-orange-600 mt-2">
-                    {startup.fundingAmount ?
-                      'Includes angel, venture capital, loans, grants, and token sales' :
-                      'Funding details not disclosed'
-                    }
-                  </p>
+              <div className="bg-black border border-amber-500/20 p-8 text-center">
+                <div className="text-5xl font-light text-amber-500/90 mb-3 tracking-tight">
+                  {formatFunding(startup.fundingAmount)}
                 </div>
+                <p className="text-gray-400 font-light mb-2">Total Capital Raised</p>
+                <p className="text-sm text-gray-600 font-light">
+                  {startup.fundingAmount ?
+                    'Aggregate funding across all financing rounds' :
+                    'Funding details undisclosed'
+                  }
+                </p>
               </div>
             </div>
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Contact Information */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <div className="flex items-center space-x-3 mb-4">
-                <Users className="h-5 w-5 text-orange-500" />
-                <h3 className="text-lg font-semibold text-slate-800">Contact Information</h3>
+            <div className="bg-gray-900 border border-gray-800 p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <Users className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
+                <h3 className="text-lg font-light text-white tracking-tight">Contact</h3>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div>
-                  <p className="text-sm text-slate-500">Founder</p>
-                  <p className="font-medium text-slate-800">
+                  <p className="text-xs text-gray-600 font-light mb-2 uppercase tracking-[0.2em]">Founder</p>
+                  <p className="font-light text-white text-lg">
                     {startup.firstName} {startup.lastName}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-slate-500">Email</p>
-                  <div className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4 text-orange-500" />
-                    <a href={`mailto:${startup.email}`} className="text-orange-600 hover:text-orange-700 font-medium">
+                  <p className="text-xs text-gray-600 font-light mb-2 uppercase tracking-[0.2em]">Email</p>
+                  <div className="flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-amber-500/70" />
+                    <a href={`mailto:${startup.email}`} className="text-amber-500/70 hover:text-amber-500 font-light transition-colors">
                       {startup.email}
                     </a>
                   </div>
@@ -299,101 +303,99 @@ export default async function ShowPage({ params: rawParams }) {
             </div>
 
             {/* Timeline */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <div className="flex items-center space-x-3 mb-4">
-                <Calendar className="h-5 w-5 text-orange-500" />
-                <h3 className="text-lg font-semibold text-slate-800">Timeline</h3>
+            <div className="bg-gray-900 border border-gray-800 p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <Calendar className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
+                <h3 className="text-lg font-light text-white tracking-tight">Timeline</h3>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500/70 rounded-full mt-2"></div>
                   <div>
-                    <p className="text-sm text-slate-500">Listed on Platform</p>
-                    <p className="font-medium text-slate-800">{formatDate(startup.createdAt)}</p>
+                    <p className="text-xs text-gray-600 font-light uppercase tracking-[0.2em]">Platform Entry</p>
+                    <p className="font-light text-white mt-1">{formatDate(startup.createdAt)}</p>
                   </div>
                 </div>
 
                 {startup.updatedAt !== startup.createdAt && (
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-slate-300 rounded-full mt-2"></div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-gray-700 rounded-full mt-2"></div>
                     <div>
-                      <p className="text-sm text-slate-500">Last Updated</p>
-                      <p className="font-medium text-slate-800">{formatDate(startup.updatedAt)}</p>
+                      <p className="text-xs text-gray-600 font-light uppercase tracking-[0.2em]">Last Updated</p>
+                      <p className="font-light text-white mt-1">{formatDate(startup.updatedAt)}</p>
                     </div>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Pitch Deck Resources */}
+            {/* Pitch Deck */}
             {startup.pitchDeck && (
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <div className="flex items-center space-x-3 mb-4">
-                  <FileText className="h-5 w-5 text-orange-500" />
-                  <h3 className="text-lg font-semibold text-slate-800">Pitch Deck</h3>
+              <div className="bg-gray-900 border border-gray-800 p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <FileText className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
+                  <h3 className="text-lg font-light text-white tracking-tight">Documentation</h3>
                 </div>
 
-                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <Award className="h-5 w-5 text-orange-500" />
-                    <div>
-                      <p className="text-sm font-medium text-slate-800 truncate max-w-[160px]">
-                        {startup.pitchDeck.split('/').pop().split('?')[0] || 'Pitch Deck'}
-                      </p>
-                      <p className="text-xs text-slate-500">Company presentation</p>
+                <div className="bg-black border border-gray-800 p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Award className="w-5 h-5 text-amber-500/70" />
+                      <div>
+                        <p className="text-sm font-light text-white">
+                          Investment Deck
+                        </p>
+                        <p className="text-xs text-gray-600 font-light">Company presentation</p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex space-x-2">
-                    {/* VIEW LINK USING IFRAME OPENING */}
-                    <a
-                      href={
-                        (() => {
-                          const url = startup.pitchDeck;
-                          const ext = url?.split('.').pop()?.toLowerCase();
-                          const useViewer = ['pdf', 'doc', 'docx', 'ppt', 'pptx'].includes(ext);
-                          return useViewer
-                            ? `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`
-                            : url;
-                        })()
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                      <span>View</span>
-                    </a>
+                    <div className="flex gap-4">
+                      <a
+                        href={
+                          (() => {
+                            const url = startup.pitchDeck;
+                            const ext = url?.split('.').pop()?.toLowerCase();
+                            const useViewer = ['pdf', 'doc', 'docx', 'ppt', 'pptx'].includes(ext);
+                            return useViewer
+                              ? `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`
+                              : url;
+                          })()
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-amber-500/70 hover:text-amber-500 text-xs font-light tracking-wide transition-colors"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        View
+                      </a>
 
-
-                    {/* DOWNLOAD LINK */}
-                    <a
-                      href={startup.pitchDeck}
-                      download
-                      className="flex items-center space-x-1 text-orange-600 hover:text-orange-700 text-sm font-medium transition-colors"
-                    >
-                      <Download className="h-3 w-3" />
-                      <span>Download</span>
-                    </a>
+                      <a
+                        href={startup.pitchDeck}
+                        download
+                        className="flex items-center gap-1 text-amber-500/70 hover:text-amber-500 text-xs font-light tracking-wide transition-colors"
+                      >
+                        <Download className="w-3 h-3" />
+                        Download
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
 
-
-            {/* Call to Action */}
-            <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-6 text-white text-center">
-              <h3 className="text-lg font-semibold mb-2">Interested in this startup?</h3>
-              <p className="text-orange-100 text-sm mb-4">
-                Connect with the founder to learn more about investment opportunities
+            {/* CTA */}
+            <div className="bg-amber-500/10 border border-amber-500/30 p-8 text-center">
+              <h3 className="text-lg font-light text-white mb-2 tracking-tight">Investment Inquiry</h3>
+              <p className="text-amber-500/70 text-sm font-light mb-6 leading-relaxed">
+                Contact the founder to discuss investment opportunities
               </p>
               <a
-                href={`mailto:${startup.email}?subject=Interest in ${startup.name}`}
-                className="bg-white text-orange-500 px-4 py-2 rounded-lg font-medium hover:bg-orange-50 transition-colors inline-flex items-center space-x-2"
+                href={`mailto:${startup.email}?subject=Investment Inquiry: ${startup.name}`}
+                className="inline-flex items-center gap-2 bg-amber-500 text-black px-6 py-3 font-light tracking-wide hover:bg-amber-400 transition-all"
               >
-                <Mail className="h-4 w-4" />
-                <span>Contact Founder</span>
+                <Mail className="w-4 h-4" />
+                Contact Founder
               </a>
             </div>
           </div>
@@ -401,24 +403,24 @@ export default async function ShowPage({ params: rawParams }) {
       </div>
 
       {/* Footer */}
-      <div className="bg-slate-800 text-white py-12 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Building2 className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-bold">Nexora</span>
+      <div className="border-t border-gray-900 py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+            <span className="text-xl font-light text-white tracking-tight">Nexora</span>
           </div>
-          <p className="text-slate-400 text-center mb-4">Building Your Vision with Precision</p>
-          <div className="flex justify-center space-x-8 text-sm">
-            <Link href="/business" className="text-slate-400 hover:text-white transition-colors">
-              All Startups
+          <p className="text-gray-600 text-center mb-6 font-light">Strategic Investment Opportunities</p>
+          <div className="flex justify-center gap-8 text-sm">
+            <Link href="/business" className="text-gray-600 hover:text-gray-400 transition-colors font-light">
+              All Companies
             </Link>
-            <span className="text-slate-600">|</span>
-            <Link href="/form" className="text-slate-400 hover:text-white transition-colors">
-              Add Startup
+            <span className="text-gray-800">|</span>
+            <Link href="/form" className="text-gray-600 hover:text-gray-400 transition-colors font-light">
+              Submit Proposal
             </Link>
-            <span className="text-slate-600">|</span>
-            <span className="text-slate-400">
-              Contact: support@nexora.com
+            <span className="text-gray-800">|</span>
+            <span className="text-gray-600 font-light">
+              investment@nexora.com
             </span>
           </div>
         </div>
