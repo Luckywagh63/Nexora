@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import { Phone, Mail, MapPin, ArrowRight, CheckCircle } from 'lucide-react';
 
 export default function ContactForm() {
   const [form, setForm] = useState({
@@ -21,189 +22,193 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-900 via-stone-800 to-amber-900 relative overflow-hidden pt-24">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-20 w-64 h-64 border border-amber-400/30 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-32 right-32 w-32 h-32 bg-amber-500/20 rotate-45 animate-bounce"></div>
-        <div className="absolute top-1/3 right-20 w-16 h-16 border-2 border-amber-300/40 rotate-45"></div>
-        <div className="absolute bottom-20 left-1/4 w-20 h-20 bg-gradient-to-r from-amber-400/20 to-stone-600/20 rounded-full"></div>
-      </div>
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Subtle texture */}
+      <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
 
-      <div className="relative z-10 py-20 px-8">
-        <div className="max-w-4xl mx-auto">
+      <div className="relative z-10 py-32 px-6">
+        <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
-            <div className="inline-block">
-              <h1 className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 mb-4 tracking-tight">
-                GET IN TOUCH
-              </h1>
-              <div className="h-2 bg-gradient-to-r from-transparent via-amber-500 to-transparent rounded-full"></div>
+          <div className="mb-20">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+              <span className="text-xs tracking-[0.3em] text-amber-500/70 font-light uppercase">Contact</span>
             </div>
-            <p className="text-2xl text-stone-300 mt-8 max-w-2xl mx-auto leading-relaxed">
-              Ready to discover the next unicorn? Let's connect and explore investment opportunities together.
+            <h1 className="text-7xl font-light text-white mb-6 tracking-tight leading-tight">
+              Get In Touch
+            </h1>
+            <p className="text-xl text-gray-600 font-light max-w-2xl">
+              Ready to explore investment opportunities? Connect with our team to discuss your portfolio strategy.
             </p>
           </div>
 
           {/* Main Form Container */}
-          <div className="bg-gradient-to-br from-stone-100 to-amber-50 rounded-3xl shadow-2xl overflow-hidden border border-amber-200/50">
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-              {/* Left Side - Form */}
-              <div className="p-12">
-                {submitted ? (
-                  <div className="text-center py-16">
-                    <div className="w-24 h-24 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg animate-pulse">
-                      <span className="text-white text-4xl">✓</span>
-                    </div>
-                    <h3 className="text-3xl font-black text-stone-800 mb-4">MESSAGE SENT!</h3>
-                    <p className="text-xl text-stone-600">Our team will reach out within 24 hours.</p>
-                    <div className="mt-8">
-                      <div className="inline-flex items-center text-amber-600 font-bold">
-                        <div className="w-2 h-2 bg-amber-600 rounded-full mr-2 animate-ping"></div>
-                        Processing your request...
-                      </div>
-                    </div>
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Left Side - Form */}
+            <div className="border border-gray-900 p-12">
+              {submitted ? (
+                <div className="py-16 text-center">
+                  <div className="w-16 h-16 border border-amber-500/30 flex items-center justify-center mx-auto mb-8">
+                    <CheckCircle className="w-8 h-8 text-amber-500 stroke-[1.5]" />
                   </div>
-                ) : (
-                  <div className="space-y-8">
-                    <div>
-                      <h2 className="text-3xl font-black text-stone-800 mb-2">START YOUR JOURNEY</h2>
-                      <p className="text-stone-600">Fill out the form and we'll be in touch soon.</p>
-                    </div>
+                  <h3 className="text-3xl font-light text-white mb-4 tracking-tight">Message Sent</h3>
+                  <p className="text-gray-600 font-light">Our team will reach out within 24 hours.</p>
+                </div>
+              ) : (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-2xl font-light text-white mb-2 tracking-tight">Start a Conversation</h2>
+                    <p className="text-gray-600 font-light text-sm">Fill out the form below and we'll be in touch.</p>
+                  </div>
 
-                    <div className="space-y-6">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="group">
-                          <label className="block text-sm font-black text-stone-700 mb-3 tracking-widest">FULL NAME</label>
-                          <div className="relative">
-                            <input
-                              type="text"
-                              name="name"
-                              value={form.name}
-                              onChange={handleChange}
-                              required
-                              className="w-full px-6 py-4 bg-white border-2 border-stone-300 rounded-xl focus:border-amber-500 focus:outline-none transition-all duration-300 shadow-sm group-hover:shadow-md font-medium text-black"
-                              placeholder="John Doe"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-amber-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                          </div>
-                        </div>
-                        <div className="group">
-                          <label className="block text-sm font-black text-stone-700 mb-3 tracking-widest">EMAIL</label>
-                          <div className="relative">
-                            <input
-                              type="email"
-                              name="email"
-                              value={form.email}
-                              onChange={handleChange}
-                              required
-                              className="w-full px-6 py-4 bg-white border-2 border-stone-300 rounded-xl focus:border-amber-500 focus:outline-none transition-all duration-300 shadow-sm group-hover:shadow-md font-medium text-black"
-                              placeholder="john@company.com"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-amber-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                          </div>
-                        </div>
-                      </div>
-
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-2 gap-6">
                       <div className="group">
-                        <label className="block text-sm font-black text-stone-700 mb-3 tracking-widest">COMPANY</label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            name="company"
-                            value={form.company}
-                            onChange={handleChange}
-                            className="w-full px-6 py-4 bg-white border-2 border-stone-300 rounded-xl focus:border-amber-500 focus:outline-none transition-all text-black duration-300 shadow-sm group-hover:shadow-md font-medium"
-                            placeholder="Your Company Name"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-amber-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                        </div>
+                        <label className="block text-xs text-gray-600 mb-3 font-light tracking-wider uppercase">Full Name</label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={form.name}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 text-white placeholder-gray-700 focus:outline-none focus:border-amber-500/50 transition-all font-light text-sm"
+                          placeholder="John Doe"
+                        />
                       </div>
-
                       <div className="group">
-                        <label className="block text-sm font-black text-stone-700 mb-3 tracking-widest">MESSAGE</label>
-                        <div className="relative">
-                          <textarea
-                            name="message"
-                            value={form.message}
-                            onChange={handleChange}
-                            rows="5"
-                            required
-                            className="w-full px-6 py-4 bg-white border-2 border-stone-300 rounded-xl focus:border-amber-500 focus:outline-none transition-all text-black duration-300 shadow-sm group-hover:shadow-md resize-none font-medium"
-                            placeholder="Tell us about your investment interests, funding goals, or any questions you have..."
-                          ></textarea>
-                          <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-amber-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                        </div>
-                      </div>
-
-                      <button
-                        onClick={handleSubmit}
-                        className="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white py-4 px-8 font-black text-lg rounded-xl hover:from-amber-700 hover:to-amber-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 tracking-wide"
-                      >
-                        SEND MESSAGE →
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Right Side - Info */}
-              <div className="bg-gradient-to-br from-amber-600 to-amber-700 p-12 text-white relative overflow-hidden">
-                <div className="absolute inset-0 bg-black/10"></div>
-                <div className="relative z-10">
-                  <h3 className="text-3xl font-black mb-8">CONNECT WITH NEXORA</h3>
-                  
-                  <div className="space-y-8">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <span className="text-2xl">📞</span>
-                      </div>
-                      <div>
-                        <div className="font-black text-lg mb-1">CALL US</div>
-                        <div className="text-amber-100">+1 (555) 123-4567</div>
-                        <div className="text-sm text-amber-200">Mon-Fri, 9AM-6PM EST</div>
+                        <label className="block text-xs text-gray-600 mb-3 font-light tracking-wider uppercase">Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={form.email}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 text-white placeholder-gray-700 focus:outline-none focus:border-amber-500/50 transition-all font-light text-sm"
+                          placeholder="john@company.com"
+                        />
                       </div>
                     </div>
 
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <span className="text-2xl">✉️</span>
-                      </div>
-                      <div>
-                        <div className="font-black text-lg mb-1">EMAIL US</div>
-                        <div className="text-amber-100">invest@nexora.com</div>
-                        <div className="text-sm text-amber-200">We respond within 24hrs</div>
-                      </div>
+                    <div className="group">
+                      <label className="block text-xs text-gray-600 mb-3 font-light tracking-wider uppercase">Company</label>
+                      <input
+                        type="text"
+                        name="company"
+                        value={form.company}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 text-white placeholder-gray-700 focus:outline-none focus:border-amber-500/50 transition-all font-light text-sm"
+                        placeholder="Your Company Name"
+                      />
                     </div>
 
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <span className="text-2xl">📍</span>
-                      </div>
-                      <div>
-                        <div className="font-black text-lg mb-1">VISIT US</div>
-                        <div className="text-amber-100">123 Venture Street</div>
-                        <div className="text-sm text-amber-200">San Francisco, CA 94105</div>
-                      </div>
+                    <div className="group">
+                      <label className="block text-xs text-gray-600 mb-3 font-light tracking-wider uppercase">Message</label>
+                      <textarea
+                        name="message"
+                        value={form.message}
+                        onChange={handleChange}
+                        rows="6"
+                        required
+                        className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 text-white placeholder-gray-700 focus:outline-none focus:border-amber-500/50 transition-all resize-none font-light text-sm"
+                        placeholder="Tell us about your investment interests..."
+                      ></textarea>
                     </div>
-                  </div>
 
-                  <div className="mt-12 p-6 bg-white/10 rounded-2xl backdrop-blur-sm">
-                    <div className="text-4xl font-black mb-2">500+</div>
-                    <div className="text-amber-100">Active Investors</div>
-                    <div className="text-sm text-amber-200 mt-2">Join our growing community</div>
+                    <button
+                      onClick={handleSubmit}
+                      className="group w-full bg-amber-500 text-black py-4 font-light text-sm tracking-wide hover:bg-amber-400 transition-all flex items-center justify-center gap-3"
+                    >
+                      Send Message
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform stroke-[1.5]" />
+                    </button>
                   </div>
                 </div>
+              )}
+            </div>
 
-                {/* Decorative Elements */}
-                <div className="absolute -top-4 -right-4 w-32 h-32 border-4 border-white/20 rounded-full"></div>
-                <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-white/10 rotate-45"></div>
+            {/* Right Side - Info */}
+            <div className="space-y-8">
+              {/* Contact Info Cards */}
+              <div className="border border-gray-900 p-8">
+                <h3 className="text-2xl font-light text-white mb-8 tracking-tight">Contact Information</h3>
+                
+                <div className="space-y-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 border border-gray-800 flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
+                    </div>
+                    <div>
+                      <div className="font-light text-white mb-1 text-sm">Call Us</div>
+                      <div className="text-gray-600 font-light text-sm">+1 (555) 123-4567</div>
+                      <div className="text-xs text-gray-700 font-light mt-1">Mon-Fri, 9AM-6PM EST</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 border border-gray-800 flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
+                    </div>
+                    <div>
+                      <div className="font-light text-white mb-1 text-sm">Email Us</div>
+                      <div className="text-gray-600 font-light text-sm">invest@nexora.com</div>
+                      <div className="text-xs text-gray-700 font-light mt-1">We respond within 24hrs</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 border border-gray-800 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
+                    </div>
+                    <div>
+                      <div className="font-light text-white mb-1 text-sm">Visit Us</div>
+                      <div className="text-gray-600 font-light text-sm">123 Venture Street</div>
+                      <div className="text-xs text-gray-700 font-light mt-1">San Francisco, CA 94105</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats Card */}
+              <div className="border border-gray-900 p-8 bg-gray-900/30">
+                <div className="space-y-6">
+                  <div className="pb-6 border-b border-gray-900">
+                    <div className="text-5xl font-light text-white mb-2 tracking-tight">500+</div>
+                    <div className="text-gray-600 font-light text-sm">Active Investors</div>
+                  </div>
+                  <div className="pb-6 border-b border-gray-900">
+                    <div className="text-5xl font-light text-white mb-2 tracking-tight">$4.2B</div>
+                    <div className="text-gray-600 font-light text-sm">Assets Under Management</div>
+                  </div>
+                  <div>
+                    <div className="text-5xl font-light text-white mb-2 tracking-tight">94%</div>
+                    <div className="text-gray-600 font-light text-sm">Client Satisfaction</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div className="border border-gray-900 p-8">
+                <h4 className="text-white font-light mb-6 text-sm tracking-wide">Quick Links</h4>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Investment Opportunities', href: '#opportunities' },
+                    { label: 'Market Insights', href: '#insights' },
+                    { label: 'Schedule Consultation', href: '#consultation' },
+                    { label: 'Download Investment Guide', href: '#guide' }
+                  ].map((link, i) => (
+                    <a 
+                      key={i}
+                      href={link.href}
+                      className="group flex items-center justify-between py-2 text-gray-600 hover:text-white transition-colors"
+                    >
+                      <span className="font-light text-sm">{link.label}</span>
+                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all stroke-[1.5]" />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-
-          {/* Bottom Stats */}
-          
         </div>
       </div>
     </div>
