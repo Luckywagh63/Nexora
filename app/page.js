@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect } from 'react';
-import Link from "next/link";
+import { TrendingUp, Shield, Users, Briefcase, ArrowRight, Award, BarChart3, Target, Globe } from 'lucide-react';
 
-export default function StartupShowcase() {
+export default function Nexora() {
   const [scrollY, setScrollY] = useState(0);
+  const [activeCategory, setActiveCategory] = useState('all');
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -11,237 +12,157 @@ export default function StartupShowcase() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const startups = [
+    { name: 'NeuralFlow AI', category: 'Artificial Intelligence', stage: 'Series A', raised: '$12M', valuation: '$85M', img: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80', desc: 'Enterprise AI platform revolutionizing decision-making with real-time predictive analytics for Fortune 500 companies.', growth: '245%', investors: 142 },
+    { name: 'HealthSync Pro', category: 'Healthcare', stage: 'Series B', raised: '$28M', valuation: '$180M', img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80', desc: 'Integrated telemedicine platform connecting patients with specialists using advanced diagnostics.', growth: '189%', investors: 287 },
+    { name: 'CryptoLedger', category: 'FinTech', stage: 'Series A', raised: '$15M', valuation: '$120M', img: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80', desc: 'Institutional-grade DeFi infrastructure with quantum-resistant security protocols.', growth: '312%', investors: 198 },
+    { name: 'GreenTech Solutions', category: 'Energy', stage: 'Seed', raised: '$6.5M', valuation: '$42M', img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80', desc: 'Next-generation solar technology achieving 52% efficiency with smart grid integration.', growth: '156%', investors: 89 },
+    { name: 'DataVault Security', category: 'Cybersecurity', stage: 'Series A', raised: '$18M', valuation: '$95M', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80', desc: 'Zero-trust architecture protecting enterprise data with behavioral biometric authentication.', growth: '203%', investors: 165 },
+    { name: 'SpaceTech Dynamics', category: 'Aerospace', stage: 'Series C', raised: '$45M', valuation: '$320M', img: 'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=800&q=80', desc: 'Satellite constellation providing global high-speed internet for underserved regions.', growth: '278%', investors: 412 }
+  ];
+
   return (
-    <div className="bg-stone-50 text-stone-800 pt-16 md:pt-20">
-      {/* Hero Section - Responsive Split */}
-      <section className="min-h-screen flex flex-col lg:flex-row">
-        {/* Left Side - Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-8 md:px-12 lg:px-16 py-12 lg:py-0 bg-gradient-to-br from-amber-50 to-stone-100 relative overflow-hidden">
-          <div className="absolute top-10 right-10 sm:top-20 sm:right-20 w-16 h-16 sm:w-32 sm:h-32 border border-amber-400/40 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-10 left-10 sm:bottom-20 sm:left-20 w-8 h-8 sm:w-16 sm:h-16 bg-amber-200/60 rotate-45"></div>
-          
-          <div className="z-10">
-            <div className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6 leading-none">
-              <div className="text-stone-800">DISCOVER.</div>
-              <div className="text-amber-600">INVEST.</div>
-              <div className="text-stone-700">GROW.</div>
-            </div>
-            
-            <p className="text-lg sm:text-xl text-stone-600 mb-8 max-w-md">
-              Connect with revolutionary startups and transform your investment portfolio with next-generation companies.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-            <Link href="/form">
-              <button className="bg-amber-600 text-cream px-6 sm:px-8 py-3 sm:py-4 rounded-none font-bold hover:bg-amber-700 transition-colors cursor-pointer shadow-lg">
-                START INVESTING
-              </button>
-            </Link>
-            <Link href="/business">
-              <button className="border-2 border-stone-600 text-stone-600 px-6 sm:px-8 py-3 sm:py-4 font-bold hover:bg-stone-600 hover:text-white cursor-pointer transition-all">
-                VIEW STARTUPS
-              </button>
-            </Link>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-black">
+      {/* Subtle texture */}
+      <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
 
-        {/* Right Side - Image */}
-        <div 
-          className="w-full lg:w-1/2 h-64 sm:h-80 lg:h-auto bg-cover bg-center relative"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-          }}
-        >
-          <div className="absolute inset-0 bg-stone-900/20"></div>
-          <div className="absolute top-4 sm:top-8 left-4 sm:left-8 text-xl sm:text-2xl font-black text-cream">
-            NEXORA<span className="text-amber-400">.</span>
-          </div>
-        </div>
-      </section>
 
-      {/* Stats Bar - Responsive Grid */}
-      <section className="py-12 sm:py-16 bg-gradient-to-r from-amber-100 to-stone-200">
-        <div className="max-w-6xl mx-auto px-6 sm:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
-            {[
-              { num: '250+', label: 'STARTUPS FUNDED' },
-              { num: '500+', label: 'ACTIVE INVESTORS' },
-              { num: '$50M+', label: 'TOTAL INVESTED' },
-              { num: '85%', label: 'SUCCESS RATE' }
-            ].map((stat, i) => (
-              <div key={i} className="group">
-                <div className="text-2xl sm:text-4xl font-black mb-2 text-amber-700 group-hover:text-amber-800 transition-colors">{stat.num}</div>
-                <div className="text-xs sm:text-sm font-bold tracking-widest text-stone-600">{stat.label}</div>
+      {/* Hero Section */}
+      <section className="relative pt-40 pb-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-3">
+                <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+                <span className="text-sm tracking-[0.3em] text-amber-500/70 font-light uppercase">Established 2018</span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Grid - Responsive */}
-      <section className="py-16 sm:py-24 bg-cream">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-stone-800 mb-4">OUR FOCUS</h2>
-            <div className="w-20 h-1 bg-amber-600 mx-auto"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-            {[
-              {
-                title: 'FINTECH',
-                desc: 'Revolutionary financial technologies disrupting traditional banking',
-                img: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-              },
-              {
-                title: 'HEALTHTECH',
-                desc: 'Innovative healthcare solutions improving lives worldwide',
-                img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-              },
-              {
-                title: 'AI & MACHINE LEARNING',
-                desc: 'Cutting-edge artificial intelligence transforming industries',
-                img: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-              }
-            ].map((service, i) => (
-              <div key={i} className="group relative h-64 sm:h-80 lg:h-96 overflow-hidden">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                  style={{backgroundImage: `url('${service.img}')`}}
-                ></div>
-                <div className="absolute inset-0 bg-stone-900/50 group-hover:bg-stone-900/30 transition-colors duration-500"></div>
-                
-                <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 z-10">
-                  <h3 className="text-xl sm:text-2xl font-black mb-2 text-cream">{service.title}</h3>
-                  <p className="text-stone-200 max-w-xs leading-relaxed text-sm sm:text-base">{service.desc}</p>
-                  <div className="w-12 h-1 bg-amber-500 mt-4"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Section - Responsive Layout */}
-      <section className="py-16 sm:py-24 bg-stone-100">
-        <div className="max-w-6xl mx-auto px-6 sm:px-8">
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
-            <div className="w-full lg:w-1/2">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-8 leading-tight text-stone-800">
-                CONNECTING
-                <br />
-                <span className="text-amber-600">VISION WITH CAPITAL</span>
-              </h2>
               
-              <div className="space-y-4 sm:space-y-6">
+              <h1 className="text-7xl lg:text-8xl font-light text-white tracking-tight leading-[0.9]">
+                Strategic
+                <span className="block mt-2">Investment</span>
+                <span className="block mt-2 text-amber-500/90">Opportunities</span>
+              </h1>
+              
+              <p className="text-xl text-gray-500 leading-relaxed max-w-2xl font-light">
+                Access rigorously vetted, high-growth companies across technology, healthcare, and sustainable industries. Build a diversified portfolio with confidence.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-6">
+                <a href='/form'>
+                <button className="group bg-amber-500 text-black px-10 py-4 font-light tracking-wide hover:bg-amber-400 transition-all flex items-center justify-center gap-3">
+                  Start Investing
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+                </a>
+                <a href='/business'>
+                <button className="border border-gray-800 text-gray-400 px-10 py-4 font-light tracking-wide hover:border-gray-700 hover:text-white transition-all">
+                  View Startup
+                </button>
+                </a>
+              </div>
+
+              <div className="grid grid-cols-3 gap-8 pt-12 border-t border-gray-900">
                 {[
-                  'Curated high-potential startups',
-                  'Comprehensive due diligence reports',
-                  'Direct founder connections',
-                  'Portfolio management tools'
-                ].map((feature, i) => (
-                  <div key={i} className="flex items-center">
-                    <div className="w-3 h-3 sm:w-4 sm:h-4 bg-amber-600 mr-3 sm:mr-4 rotate-45"></div>
-                    <span className="text-base sm:text-lg text-stone-700">{feature}</span>
+                  { value: '$4.2B', label: 'Assets Under Management' },
+                  { value: '1,850+', label: 'Portfolio Companies' },
+                  { value: '94.2%', label: 'Average Success Rate' }
+                ].map((stat, i) => (
+                  <div key={i}>
+                    <div className="text-4xl font-light text-white mb-2 tracking-tight">{stat.value}</div>
+                    <div className="text-xs text-gray-600 font-light tracking-wide">{stat.label}</div>
                   </div>
                 ))}
               </div>
-
-              <button className="mt-8 bg-stone-700 text-cream px-6 sm:px-8 py-3 font-bold hover:bg-stone-800 transition-colors">
-                LEARN MORE
-              </button>
             </div>
 
-            <div className="w-full lg:w-1/2">
-              <div className="bg-gradient-to-br from-amber-500 to-amber-600 p-6 sm:p-8 relative shadow-2xl">
-                <div className="text-4xl sm:text-6xl font-black text-right mb-4 text-cream">120%</div>
-                <div className="text-right text-cream">
-                  <p className="font-bold mb-2 text-lg sm:text-xl">AVERAGE ROI</p>
-                  <p className="text-amber-100 leading-relaxed text-sm sm:text-base">Our portfolio companies have generated exceptional returns for our investor community.</p>
-                </div>
+            <div className="relative">
+              <div className="relative bg-gray-900 border border-gray-800 p-8">
+                <img 
+                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" 
+                  alt="Analytics Dashboard"
+                  className="w-full h-96 object-cover opacity-70 mb-6"
+                />
                 
-                <div className="absolute -top-2 -left-2 sm:-top-4 sm:-left-4 w-6 h-6 sm:w-8 sm:h-8 border-2 sm:border-4 border-amber-300"></div>
-                <div className="absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 border-2 sm:border-4 border-amber-300"></div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-black/50 border border-amber-500/20 p-6">
+                    <TrendingUp className="w-8 h-8 text-amber-500/70 stroke-[1.5] mb-4" />
+                    <div className="text-3xl font-light text-white mb-1">+34.7%</div>
+                    <div className="text-xs text-gray-600 font-light">Average Annual Return</div>
+                  </div>
+                  <div className="bg-black/50 border border-gray-800 p-6">
+                    <BarChart3 className="w-8 h-8 text-gray-500 stroke-[1.5] mb-4" />
+                    <div className="text-3xl font-light text-white mb-1">$1.8M</div>
+                    <div className="text-xs text-gray-600 font-light">Avg. Portfolio Value</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Top Startups Showcase - Responsive Grid */}
-      <section className="py-16 sm:py-24 bg-stone-50">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 text-stone-800">TOP STARTUPS</h2>
-            <p className="text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto">Discover the most promising startups ready for investment</p>
-            <div className="w-20 h-1 bg-amber-600 mx-auto mt-6"></div>
+      {/* Trust Indicators */}
+      <section className="py-20 border-y border-gray-900">
+        <div className="max-w-7xl mx-auto px-6">
+          <p className="text-center text-xs text-gray-700 font-light tracking-[0.2em] uppercase mb-12">Trusted by Leading Financial Institutions</p>
+          <div className="flex flex-wrap justify-center items-center gap-16 opacity-20">
+            <Globe className="w-16 h-16 text-gray-700" />
+            <Briefcase className="w-16 h-16 text-gray-700" />
+            <Shield className="w-16 h-16 text-gray-700" />
+            <Award className="w-16 h-16 text-gray-700" />
+            <Target className="w-16 h-16 text-gray-700" />
+          </div>
+        </div>
+      </section>
+
+      {/* Value Proposition */}
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <div className="flex items-center gap-3 mb-8 justify-center">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+              <span className="text-xs tracking-[0.3em] text-amber-500/70 font-light uppercase">Our Approach</span>
+            </div>
+            <h2 className="text-6xl font-light text-white tracking-tight mb-6 leading-tight">
+              Institutional-Grade
+              <span className="block">Investment Platform</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">
+              Comprehensive due diligence, sophisticated analytics, and dedicated support for discerning investors.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid md:grid-cols-3 gap-16">
             {[
-              {
-                name: 'VERIDIAN AI',
-                category: 'Artificial Intelligence',
-                funding: '$2.5M Seed',
-                description: 'Revolutionary AI platform for predictive healthcare analytics',
-                img: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+              { 
+                icon: Shield, 
+                title: 'Rigorous Verification', 
+                desc: 'Multi-stage due diligence including financial audits, market validation, legal compliance reviews, and management assessments.',
+                img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80'
               },
-              {
-                name: 'QUANTUM LEDGER',
-                category: 'Blockchain Finance',
-                funding: '$5M Series A',
-                description: 'Next-gen DeFi platform with quantum-secure transactions',
-                img: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+              { 
+                icon: BarChart3, 
+                title: 'Advanced Analytics', 
+                desc: 'Proprietary algorithms analyze market trends, growth trajectories, and risk factors to identify high-potential opportunities.',
+                img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'
               },
-              {
-                name: 'BIOSYNTH',
-                category: 'Biotechnology',
-                funding: '$3.8M Pre-Series A',
-                description: 'Synthetic biology solutions for sustainable manufacturing',
-                img: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-              },
-              {
-                name: 'NEURAL DYNAMICS',
-                category: 'Robotics',
-                funding: '$4.2M Seed',
-                description: 'Advanced robotics with human-like cognitive abilities',
-                img: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-              },
-              {
-                name: 'CLEANTECH INNOVATIONS',
-                category: 'Clean Energy',
-                funding: '$6M Series A',
-                description: 'Revolutionary solar technology with 45% efficiency rates',
-                img: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-              },
-              {
-                name: 'SPACE DYNAMICS',
-                category: 'Aerospace',
-                funding: '$8M Series B',
-                description: 'Satellite constellation for global internet connectivity',
-                img: 'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+              { 
+                icon: Users, 
+                title: 'Expert Network', 
+                desc: 'Access to industry veterans, successful entrepreneurs, and institutional investors with proven track records.',
+                img: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=800&q=80'
               }
-            ].map((startup, i) => (
-              <div key={i} className="group relative bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div 
-                  className="h-40 sm:h-48 bg-cover bg-center relative"
-                  style={{backgroundImage: `url('${startup.img}')`}}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent"></div>
-                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-amber-600 text-cream px-2 sm:px-3 py-1 text-xs sm:text-sm font-bold rounded">
-                    {startup.funding}
-                  </div>
+            ].map((feature, i) => (
+              <div key={i} className="group border border-gray-900 hover:border-gray-800 transition-all">
+                <div className="h-64 overflow-hidden">
+                  <img src={feature.img} alt={feature.title} className="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-700" />
                 </div>
-                
-                <div className="p-4 sm:p-6">
-                  <div className="text-xs sm:text-sm text-amber-600 font-bold mb-2 tracking-widest">{startup.category}</div>
-                  <h3 className="text-lg sm:text-xl font-black text-stone-800 mb-3">{startup.name}</h3>
-                  <p className="text-stone-600 text-sm leading-relaxed mb-4">{startup.description}</p>
-                  
-                  <button className="w-full bg-stone-100 hover:bg-amber-600 hover:text-cream text-stone-700 font-bold py-2 px-4 transition-colors duration-300 text-sm sm:text-base">
-                    VIEW DETAILS
-                  </button>
+                <div className="p-8">
+                  <div className="mb-8">
+                    <feature.icon className="w-10 h-10 text-amber-500/70 stroke-[1.5]" />
+                  </div>
+                  <h3 className="text-2xl font-light text-white mb-4 tracking-tight">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed font-light">{feature.desc}</p>
                 </div>
               </div>
             ))}
@@ -249,80 +170,123 @@ export default function StartupShowcase() {
         </div>
       </section>
 
-  {/* Testimonial - Responsive */}
-<section className="py-16 sm:py-24 bg-gradient-to-br from-amber-50 to-stone-100">
-  <div className="max-w-4xl mx-auto px-6 sm:px-8">
-    <div className="bg-cream p-6 sm:p-8 lg:p-12 rounded-lg shadow-xl border border-stone-200">
-      <div className="flex justify-center space-x-1 mb-6">
-        {[...Array(5)].map((_, i) => (
-          <span key={i} className="text-amber-500 text-xl sm:text-2xl">★</span>
-        ))}
-      </div>
-      <p className="text-lg sm:text-xl lg:text-2xl text-stone-700 italic leading-relaxed mb-8 text-center">
-        &quot;Nexora&apos;s platform helped me identify and invest in three startups that have already returned 3x my initial investment. Exceptional curation and support.&quot;
-      </p>
-      <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-amber-200 rounded-full flex items-center justify-center text-amber-800 font-bold text-lg sm:text-xl">
-          SL
-        </div>
-        <div className="text-center sm:text-left">
-          <p className="font-bold text-stone-800">Sarah Lopez</p>
-          <p className="text-stone-600 text-sm sm:text-base">Angel Investor & Venture Partner</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-      {/* Contact Section - Responsive */}
-      <section className="py-16 sm:py-24 bg-gradient-to-r from-stone-700 to-stone-800 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-5 right-5 sm:top-10 sm:right-10 w-20 h-20 sm:w-40 sm:h-40 border border-amber-400/30 rounded-full"></div>
-          <div className="absolute bottom-5 left-5 sm:bottom-10 sm:left-10 w-10 h-10 sm:w-20 sm:h-20 bg-amber-500/20 rotate-45"></div>
-        </div>
-
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 text-center relative z-10">
-          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black mb-8 text-cream">
-            START YOUR
-            <br />
-            <span className="text-amber-400">INVESTMENT JOURNEY</span>
-          </h2>
-          
-          <p className="text-lg sm:text-xl mb-12 max-w-2xl mx-auto text-stone-300">
-            Join our exclusive community of investors and discover the next unicorn startups.
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-12 mb-12">
+      {/* Investment Opportunities */}
+      <section id="opportunities" className="py-32 px-6 border-t border-gray-900">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-end mb-16">
             <div>
-              <div className="text-lg sm:text-2xl font-black mb-2 text-amber-400">CALL</div>
-              <div className="text-stone-300 text-sm sm:text-base">+1 (555) 123-4567</div>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+                <span className="text-xs tracking-[0.3em] text-amber-500/70 font-light uppercase">Curated Opportunities</span>
+              </div>
+              <h2 className="text-6xl font-light text-white tracking-tight">
+                Featured Investment
+                <span className="block">Portfolio</span>
+              </h2>
             </div>
-            <div>
-              <div className="text-lg sm:text-2xl font-black mb-2 text-amber-400">EMAIL</div>
-              <div className="text-stone-300 text-sm sm:text-base">invest@nexora.com</div>
-            </div>
-            <div>
-              <div className="text-lg sm:text-2xl font-black mb-2 text-amber-400">VISIT</div>
-              <div className="text-stone-300 text-sm sm:text-base">123 Venture Street</div>
-            </div>
+            <button className="hidden md:flex items-center gap-2 text-amber-500/70 font-light text-sm tracking-wide hover:text-amber-500 transition-colors">
+              View All
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
 
-          <button className="bg-amber-600 text-cream px-8 sm:px-12 py-3 sm:py-4 font-black text-base sm:text-lg hover:bg-amber-700 transition-colors shadow-lg">
-            JOIN INVESTOR NETWORK
-          </button>
+          <div className="flex gap-3 mb-16 overflow-x-auto pb-4">
+            {['all', 'Technology', 'Healthcare', 'FinTech', 'Energy', 'Manufacturing'].map(cat => (
+              <button 
+                key={cat} 
+                onClick={() => setActiveCategory(cat)}
+                className={`px-6 py-3 font-light tracking-wide transition-all whitespace-nowrap ${
+                  activeCategory === cat 
+                    ? 'text-amber-500 border-b-2 border-amber-500' 
+                    : 'text-gray-600 hover:text-gray-400'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {startups.map((startup, idx) => (
+              <div key={idx} className="group cursor-pointer border border-gray-900 hover:border-gray-800 transition-all">
+                <div className="relative overflow-hidden bg-gray-900">
+                  <img 
+                    src={startup.img}
+                    alt={startup.name}
+                    className="w-full h-80 object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                  
+                  <div className="absolute top-6 left-6">
+                    <span className="text-xs font-light tracking-wider text-amber-500/90 uppercase">{startup.stage}</span>
+                  </div>
+
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <div className="text-xs text-gray-500 font-light tracking-wider uppercase mb-2">{startup.category}</div>
+                    <div className="text-2xl font-light text-white tracking-tight">{startup.name}</div>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <p className="text-gray-600 font-light leading-relaxed text-sm mb-6">{startup.desc}</p>
+                  
+                  <div className="grid grid-cols-3 gap-4 mb-6 pb-6 border-t border-gray-900">
+                    <div>
+                      <div className="text-lg font-light text-white mt-4">{startup.raised}</div>
+                      <div className="text-xs text-gray-700 font-light">Raised</div>
+                    </div>
+                    <div>
+                      <div className="text-lg font-light text-white mt-4">{startup.valuation}</div>
+                      <div className="text-xs text-gray-700 font-light">Valuation</div>
+                    </div>
+                    <div>
+                      <div className="text-lg font-light text-amber-500 mt-4">+{startup.growth}</div>
+                      <div className="text-xs text-gray-700 font-light">Growth</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4 text-gray-700" />
+                      <span className="text-gray-600 font-light">{startup.investors} Investors</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-gray-700 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Footer - Responsive */}
-      <footer className="py-8 sm:py-12 bg-stone-900 border-t border-stone-700">
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 text-center">
-          <div className="text-2xl sm:text-3xl font-black mb-4 text-cream">
-            NEXORA<span className="text-amber-400">.</span>
+      {/* CTA Section */}
+      <section className="py-40 px-6 border-t border-gray-900">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="w-16 h-16 border border-amber-500/30 flex items-center justify-center mx-auto mb-12">
+            <Briefcase className="w-8 h-8 text-amber-500/70 stroke-[1.5]" />
           </div>
-          <p className="text-stone-400 text-sm sm:text-base">© 2024 Nexora Ventures. Connecting visionaries with capital.</p>
+          
+          <h2 className="text-6xl font-light text-white mb-8 tracking-tight leading-tight">
+            Ready to Build Your
+            <span className="block text-amber-500/90 mt-2">Investment Portfolio?</span>
+          </h2>
+          
+          <p className="text-xl text-gray-600 mb-16 font-light max-w-2xl mx-auto">
+            Join our community of sophisticated investors and gain access to vetted, high-growth opportunities.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <button className="bg-amber-500 text-black px-12 py-4 font-light tracking-wide hover:bg-amber-400 transition-all">
+              Schedule a Consultation
+            </button>
+            <button className="border border-gray-800 text-gray-400 px-12 py-4 font-light tracking-wide hover:border-gray-700 hover:text-white transition-all">
+              Download Investment Guide
+            </button>
+          </div>
         </div>
-      </footer>
+      </section>
+
+
     </div>
   );
 }
