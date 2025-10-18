@@ -34,7 +34,7 @@ export default function Nexora() {
             <div className="space-y-8">
               <div className="inline-flex items-center gap-3">
                 <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
-                <span className="text-sm tracking-[0.3em] text-amber-500/70 font-light uppercase">Established 2018</span>
+                <span className="text-sm tracking-[0.3em] text-amber-500/70 font-light uppercase">Establishe Together</span>
               </div>
               
               <h1 className="text-7xl lg:text-8xl font-light text-white tracking-tight leading-[0.9]">
