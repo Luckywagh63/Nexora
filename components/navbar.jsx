@@ -101,12 +101,12 @@ export default function NexoraNavbar() {
               </div>
             ) : (
               <>
-                <a href="/auth">
+                <a href="/login-signup">
                   <button className="text-gray-500 hover:text-white font-light text-sm tracking-wide transition-colors">
                     Sign In
                   </button>
                 </a>
-                <a href="/auth">
+                <a href="/login-signup">
                   <button className="bg-amber-500 text-black px-6 py-2.5 font-light text-sm tracking-wide hover:bg-amber-400 transition-all">
                     Get Started
                   </button>
