@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Lock, User, ArrowRight } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { ArrowRight } from "lucide-react";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -25,8 +26,7 @@ export default function AuthPage() {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      // Add your Google sign-in logic here
-      console.log("Google sign-in");
+      await signIn("google", { callbackUrl: "/" });
     } catch (error) {
       alert("Google sign-in failed: " + error.message);
     } finally {
@@ -37,18 +37,15 @@ export default function AuthPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       if (isLogin) {
-        // Add your login logic here
-        console.log("Login", formData);
+        console.log("Login:", formData);
       } else {
         if (!formData.acceptTerms) {
           alert("You must accept the terms to sign up.");
           return;
         }
-        // Add your signup logic here
-        console.log("Signup", formData);
+        console.log("Signup:", formData);
       }
     } catch (error) {
       alert((isLogin ? "Login" : "Signup") + " failed: " + error.message);
@@ -59,7 +56,6 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-black relative">
-      {/* Subtle texture */}
       <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
 
       <div className="w-full max-w-md relative z-10">
@@ -76,6 +72,7 @@ export default function AuthPage() {
             </p>
           </div>
 
+          {/* Google Button */}
           <button
             onClick={handleGoogleSignIn}
             disabled={loading}
@@ -90,6 +87,7 @@ export default function AuthPage() {
             Continue with Google
           </button>
 
+          {/* Divider */}
           <div className="relative mb-8">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-900"></div>
@@ -99,7 +97,8 @@ export default function AuthPage() {
             </div>
           </div>
 
-          <div onSubmit={handleSubmit} className="space-y-6">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
             {!isLogin && (
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -174,14 +173,14 @@ export default function AuthPage() {
             )}
 
             <button
-              onClick={handleSubmit}
+              type="submit"
               disabled={loading}
               className="group w-full bg-amber-500 text-black py-3 px-4 font-light text-sm tracking-wide hover:bg-amber-400 focus:outline-none transition-all disabled:opacity-50 flex items-center justify-center gap-3"
             >
               {loading ? "Loading..." : isLogin ? "Sign In" : "Create Account"}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform stroke-[1.5]" />
             </button>
-          </div>
+          </form>
 
           <div className="mt-8 text-center">
             <button
