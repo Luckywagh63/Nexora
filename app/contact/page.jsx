@@ -133,16 +133,7 @@ export default function ContactForm() {
                 <h3 className="text-2xl font-light text-white mb-8 tracking-tight">Contact Information</h3>
                 
                 <div className="space-y-8">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 border border-gray-800 flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-5 h-5 text-amber-500/70 stroke-[1.5]" />
-                    </div>
-                    <div>
-                      <div className="font-light text-white mb-1 text-sm">Call Us</div>
-                      <div className="text-gray-600 font-light text-sm">+1 (555) 123-4567</div>
-                      <div className="text-xs text-gray-700 font-light mt-1">Mon-Fri, 9AM-6PM EST</div>
-                    </div>
-                  </div>
+              
 
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 border border-gray-800 flex items-center justify-center flex-shrink-0">
@@ -150,7 +141,7 @@ export default function ContactForm() {
                     </div>
                     <div>
                       <div className="font-light text-white mb-1 text-sm">Email Us</div>
-                      <div className="text-gray-600 font-light text-sm">invest@nexora.com</div>
+                      <div className="text-gray-600 font-light text-sm">nexoraavl@gmail.com</div>
                       <div className="text-xs text-gray-700 font-light mt-1">We respond within 24hrs</div>
                     </div>
                   </div>
@@ -161,8 +152,8 @@ export default function ContactForm() {
                     </div>
                     <div>
                       <div className="font-light text-white mb-1 text-sm">Visit Us</div>
-                      <div className="text-gray-600 font-light text-sm">123 Venture Street</div>
-                      <div className="text-xs text-gray-700 font-light mt-1">San Francisco, CA 94105</div>
+                      <div className="text-gray-600 font-light text-sm">Navi Mumbai</div>
+
                     </div>
                   </div>
                 </div>
@@ -172,11 +163,11 @@ export default function ContactForm() {
               <div className="border border-gray-900 p-8 bg-gray-900/30">
                 <div className="space-y-6">
                   <div className="pb-6 border-b border-gray-900">
-                    <div className="text-5xl font-light text-white mb-2 tracking-tight">500+</div>
+                    <div className="text-5xl font-light text-white mb-2 tracking-tight">50</div>
                     <div className="text-gray-600 font-light text-sm">Active Investors</div>
                   </div>
                   <div className="pb-6 border-b border-gray-900">
-                    <div className="text-5xl font-light text-white mb-2 tracking-tight">$4.2B</div>
+                    <div className="text-5xl font-light text-white mb-2 tracking-tight">Rs.40K</div>
                     <div className="text-gray-600 font-light text-sm">Assets Under Management</div>
                   </div>
                   <div>
@@ -186,27 +177,6 @@ export default function ContactForm() {
                 </div>
               </div>
 
-              {/* Quick Links */}
-              <div className="border border-gray-900 p-8">
-                <h4 className="text-white font-light mb-6 text-sm tracking-wide">Quick Links</h4>
-                <div className="space-y-3">
-                  {[
-                    { label: 'Investment Opportunities', href: '#opportunities' },
-                    { label: 'Market Insights', href: '#insights' },
-                    { label: 'Schedule Consultation', href: '#consultation' },
-                    { label: 'Download Investment Guide', href: '#guide' }
-                  ].map((link, i) => (
-                    <a 
-                      key={i}
-                      href={link.href}
-                      className="group flex items-center justify-between py-2 text-gray-600 hover:text-white transition-colors"
-                    >
-                      <span className="font-light text-sm">{link.label}</span>
-                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all stroke-[1.5]" />
-                    </a>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </div>
